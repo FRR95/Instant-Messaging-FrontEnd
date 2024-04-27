@@ -15,7 +15,7 @@ export const Home = () => {
                             <div className="d-flex z-1 row  justify-content-center m-0 align-items-center sticky-top w-100 homeNavbarDesign">
                                 Esto es el navbar del home
                             </div>
-                            <div className="d-flex row z-0 justify-content-center  align-items-center sticky-top w-100 contentHomeDesign">
+                            <div className="d-flex row z-0 justify-content-center  align-items-center  w-100 contentHomeDesign">
                                 <div className="messageDesign w-45">
                                     <img className="card-img-top" src="..." alt="Card image cap" />
                                     <div className="card-body">
