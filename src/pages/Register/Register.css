@@ -1,10 +1,19 @@
 .registerSectionDesign {
     margin: 0;
     padding: 0;
-    min-height: 88vh;
-    background-color: #1CC4F7;
+
+    background-color: rgb(62, 244, 250);
+    height: 100vh;
+
 }
-.registerBoxDesign{
-    background-color: #7adaf7;
+
+.registerBoxDesign {
+
+
+    margin: 0;
     border: 1px solid azure;
+}
+
+.error{
+    color: red;
 }

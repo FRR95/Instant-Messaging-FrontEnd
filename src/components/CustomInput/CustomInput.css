@@ -1,10 +1,7 @@
-.input-design-big{
-    height: 10em;
-    width: 30em;
-}
+
 .input-design{
   
-    width: 30em;
+    width: 20em;
     border: 0.2em solid black;
     border-radius: 0.5em;
     margin: 1em;
