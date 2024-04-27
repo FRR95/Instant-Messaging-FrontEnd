@@ -1,0 +1,42 @@
+.homeSectionDesign {
+    color: rgb(255, 255, 255);
+    margin: 0;
+    padding: 0;
+ 
+}
+
+.headerHomeDesign {
+    background-color: rgb(187, 238, 207);
+    overflow-y: scroll;
+    height: 100vh;
+}
+
+.homeDesign{
+    background-color: rgb(62, 244, 250);
+    overflow-y: scroll; 
+    height: 100vh;
+    margin: 0;
+}
+
+.card{
+    
+    margin: 1em;
+}
+
+.messageDesign{
+    background-color: rgb(255, 243, 133);
+    margin: 2em;
+}
+
+.contentHomeDesign{
+    margin-top: 15em;
+}
+
+.homeNavbarDesign{
+    background-color: black;
+    
+}
+
+.textAreaDesign{
+    max-height: 50px;
+}
