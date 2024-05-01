@@ -65,7 +65,7 @@ export const Register = () => {
     }
     return (
         <>
-            <div className="d-flex col-11 justify-content-center align-items-center flex-column registerSectionDesign">
+            <div className="d-flex col justify-content-center align-items-center flex-column registerSectionDesign">
 
 
                 <h1>REGÍSTRATE</h1>
