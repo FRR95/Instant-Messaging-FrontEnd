@@ -8,10 +8,11 @@ function App() {
 
   return (
     <>
- <div className="d-flex col justify-content-center align-items-center">
-        <Header />
+
+        
         <Body />
-      </div>
+        <Header />
+      
     </>
   )
 }
