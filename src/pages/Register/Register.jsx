@@ -68,7 +68,7 @@ export const Register = () => {
             <div className="d-flex col justify-content-center align-items-center flex-column registerSectionDesign">
 
 
-                <h1>REGÍSTRATE</h1>
+                <h3>REGÍSTRATE</h3>
 
                 <label>Nombre</label>
                 <CustomInput
