@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { decodeToken } from "react-jwt";
 import { loginService } from "../../services/authApiCalls.js";
 import { useState } from "react";
+import { GetProfile } from "../../services/userApiCalls.js";
 
 export const Login = () => {
     
@@ -54,6 +55,7 @@ export const Login = () => {
           }
     
           const fetched = await loginService(user);
+          const fetchedUser = await GetProfile(fetched.token);
     
           if (!fetched.success) {
           
@@ -61,11 +63,12 @@ export const Login = () => {
           }
     
           if (fetched.token) {
-            const decodificado = decodeToken(fetched.token);
+      
     
             const passport = {
               token: fetched.token,
-              user: decodificado,
+              profileDetail:fetchedUser.data
+        
             };
     
             dispatch(login({ credentials: passport }));
