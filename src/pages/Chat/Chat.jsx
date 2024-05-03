@@ -1,14 +1,16 @@
 import "./Chat.css"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userData } from "../../app/slices/userSlice";
 import { getUserChatsService } from "../../services/chatApiCalls";
+import { updateChatDetail } from "../../app/slices/chatDetailSlice";
 
 
 export const Chat = () => {
     const rdxUser = useSelector(userData);
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     const [chat, setChat] = useState([]);
 
@@ -23,7 +25,7 @@ export const Chat = () => {
             }
 
             setChat(fetched.data);
-            console.log(fetched.data);
+          
 
 
 
@@ -44,6 +46,14 @@ export const Chat = () => {
         }
     }, [chat])
 
+    const manageChatDetail = (chats) => {
+        //1. guardamos en RDX
+        const dispatched = dispatch(updateChatDetail({ chats }));
+    
+        // 2. navegamos a la vista de detalle
+        navigate("/chatdetail");
+      };
+
 
     return (
         <>
@@ -53,11 +63,13 @@ export const Chat = () => {
                     ? (<>{chat.map(chats => {
                         return (
                             <>
-                                <div className="d-flex row justify-content-center align-items-center">
-                                    <div className="d-flex col justify-content-center align-items-center">
-                                        <div className="d-flex col-8 justify-content-center align-items-center">{chats.name}</div>
-                                        <div className="d-flex col-2 justify-content-center align-items-center">{chats.author_id}</div>
-                                        <div className="d-flex col-2 justify-content-center align-items-center">{chats.created_at}</div>
+                                <div className="d-flex row justify-content-center align-items-center chatCardSectionDesign ">
+                                    <div className="d-flex row justify-content-center align-items-center chatCardDesign" onClick={()=>manageChatDetail(chats)}>
+                                        <div className="d-flex col justify-content-center align-items-center">
+                                            <div className="d-flex col-6 justify-content-center align-items-center">{chats.name}</div>
+                                            <div className="d-flex col-6 justify-content-center align-items-center">{chats.author_id}</div>
+                                            
+                                        </div>
                                     </div>
                                 </div>
 

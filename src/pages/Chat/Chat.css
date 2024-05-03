@@ -1,6 +1,15 @@
 .chatDesign{
     margin: 0;
     padding: 0;
-
     background-color: rgb(62, 244, 250);
+}
+
+.chatCardDesign{
+    margin: 0;
+    padding: 0;
+
+}
+.chatCardSectionDesign{
+    margin: 0;
+    padding: 0;
 }
