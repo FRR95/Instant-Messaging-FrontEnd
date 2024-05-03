@@ -7,9 +7,15 @@
 .chatCardDesign{
     margin: 0;
     padding: 0;
+    background-color: beige;
 
 }
 .chatCardSectionDesign{
     margin: 0;
     padding: 0;
+}
+
+.addButtonDesign{
+    width: 4em;
+    margin-right: 0.1em;
 }

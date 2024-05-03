@@ -83,11 +83,11 @@ export const ChatDetail = () => {
                 </div>
                 <div className="d-flex row-1  justify-content-center align-items-center">
                     <div className="d-flex col sticky-bottom justify-content-center align-items-center">
-                        <div className="d-flex col-9 justify-content-start align-items-center">
+                        <div className="d-flex col-11 justify-content-start align-items-center">
                             <textarea className="textAreaDesign" name="" id="" cols="30" rows="10"></textarea>
                         </div>
-                        <div className="d-flex col-3 justify-content-end align-items-center">
-                            <button>ENVIAR</button>
+                        <div className="d-flex col-1 justify-content-end align-items-center">
+                            <button><i className="bi bi-send-fill"></i></button>
                         </div>
                     </div>
                 </div>
