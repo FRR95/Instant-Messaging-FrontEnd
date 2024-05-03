@@ -4,6 +4,7 @@ import { Register } from "../../pages/Register/Register";
 import { Login } from "../../pages/Login/Login";
 import { Profile } from "../../pages/Profile/Profile";
 import { Chat } from "../../pages/Chat/Chat";
+import { ChatDetail } from "../../pages/ChatDetail/ChatDetail";
 
 
 
@@ -17,6 +18,7 @@ export const Body = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/chats" element={<Chat />} />
+      <Route path="/chatdetail" element={<ChatDetail />} />
     </Routes>
   );
 };
