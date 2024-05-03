@@ -1,0 +1,23 @@
+.ChatDetailSectionDesign{
+    margin: 0;
+    padding: 0;
+    background-color: aquamarine;
+    min-height: 10em;
+}
+
+.textAreaDesign{
+    height: 3em;
+    border-radius: 1em;
+    resize: none;
+}
+
+.messageCardDesign{
+    background-color: rgb(152, 248, 152);
+    border-radius: 1em;
+    border: solid 1px black;
+    width: 15em;
+}
+
+.navBarChatDetailDesign{
+    background-color: aliceblue;
+}
