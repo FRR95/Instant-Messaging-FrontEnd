@@ -11,8 +11,14 @@
     resize: none;
 }
 
-.messageCardDesign{
+.ownMessageCardDesign{
     background-color: rgb(152, 248, 152);
+    border-radius: 1em;
+    border: solid 1px black;
+    width: 15em;
+}
+.notOwnMessageCardDesign{
+    background-color: rgb(145, 143, 143);
     border-radius: 1em;
     border: solid 1px black;
     width: 15em;

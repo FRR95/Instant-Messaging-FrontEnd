@@ -65,13 +65,14 @@ export const ChatDetail = () => {
                                 messages => {
                                     return (
                                         <>
-
-                                            <div className="d-flex row my-2 justify-content-end align-items-center messageCardDesign ">
-                                                <div className="d-flex row-2 justify-content-end align-items-center">
-                                                    Autor
-                                                </div>
-                                                <div className="d-flex row-10 justify-content-end align-items-center">
-                                                    {messages.content}
+                                            <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex row m-0 justify-content-end align-items-center") : ("d-flex row m-0 justify-content-start align-items-center")}>
+                                                <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex row my-2 justify-content-end align-items-center ownMessageCardDesign ") : ("d-flex row my-2 justify-content-start align-items-center notOwnMessageCardDesign")}>
+                                                    <div className="d-flex row-2 justify-content-end align-items-center">
+                                                        Autor
+                                                    </div>
+                                                    <div className="d-flex row-10 justify-content-end align-items-center">
+                                                        {messages.content}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </>
