@@ -17,7 +17,7 @@ export const Chat = () => {
     const [chat, setChat] = useState([]);
 
     const [chatCredential, setchatCredential] = useState({
-        id:"",
+        id: "",
         name: "",
     });
 
@@ -111,39 +111,38 @@ export const Chat = () => {
         }
     }
 
+    const clearForm = async () => {
+        setchatCredential({
+            id: "",
+            name: "",
+        })
+
+
+    }
+
     const updateChat = async (chatId) => {
 
-     
+
         const fetched = await updateChatService(chatId, chatCredential, rdxUser.credentials.token)
         if (!fetched.success) {
             console.log(fetched.message)
         }
-    
+
         console.log(fetched.message)
         getUserChats()
-    
-        setchatCredential({
-          id: "",
-          name: "",
-        })
-      }
+
+        clearForm()
+    }
 
     const AddInfoToForm = async (chat) => {
         setchatCredential({
-          id: chat.id,
-          name: chat.name,
-         
-        })
-      }
+            id: chat.id,
+            name: chat.name,
 
-      const clearForm = async () => {
-        setchatCredential({
-          id: "",
-          name: "",
         })
-    
-    
-      }
+    }
+
+  
 
 
 
@@ -202,7 +201,7 @@ export const Chat = () => {
                             </div>
                             <div className="modal-footer">
 
-                                <button type="button" onClick={()=>updateChat(chatCredential.id)} className="btn buttonEditDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i>{`Editar chat`}</button>
+                                <button type="button" onClick={() => updateChat(chatCredential.id)} className="btn buttonEditDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i>{`Editar chat`}</button>
                             </div>
                         </div>
                     </div>
@@ -212,14 +211,14 @@ export const Chat = () => {
                     ? (<>{chat.map(chats => {
                         return (
                             <>
-                            {/* onClick={() => manageChatDetail(chats)} */}
-                                <div className="d-flex row mb-1 justify-content-center align-items-center chatCardSectionDesign ">
-                                    <div className="d-flex row justify-content-center align-items-center chatCardDesign" > 
+                                {/* onClick={() => manageChatDetail(chats)} */}
+                                <div className="d-flex row  justify-content-center align-items-center chatCardSectionDesign ">
+                                    <div className="d-flex row justify-content-center align-items-center chatCardDesign" >
                                         <div className="d-flex col justify-content-center align-items-center" onClick={() => manageChatDetail(chats)}>
                                             <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>{chats.name}</div>
                                             <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>{chats.author_id}</div>
                                             <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-none")}><button onClick={() => deleteChat(chats.id)}><i className="bi bi-trash"></i></button></div>
-                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-none")}><button data-bs-toggle="modal" data-bs-target="#updateChatModal" onClick={() => AddInfoToForm(chats)}><i class="bi bi-pencil"></i></button></div>
+                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-none")}><button data-bs-toggle="modal" data-bs-target="#updateChatModal" onClick={() => AddInfoToForm(chats)}><i className="bi bi-pencil"></i></button></div>
 
                                         </div>
                                     </div>
