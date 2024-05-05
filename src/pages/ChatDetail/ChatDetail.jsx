@@ -8,18 +8,41 @@ import { useState } from "react";
 import { bringMessagesService } from "../../services/chatApiCalls";
 import { createMessageService, deleteMessageService, updateMessageService } from "../../services/messageApiCalls";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
+import { addUserToChatService, getUsersFromChatService, removeUserToChatService } from "../../services/userChatApiCalls";
+import { getUsersService } from "../../services/userApiCalls";
 
 export const ChatDetail = () => {
     const detailRdx = useSelector(chatDetailData);
     const navigate = useNavigate();
     const rdxUser = useSelector(userData)
     const [message, setMessage] = useState([]);
+    const [usersChat, setUsersChat] = useState([]);
+    const [users, setUser] = useState([]);
     const [messageCredential, setMessageCredentials] = useState(
         {
             id: "",
             content: "",
         }
     );
+
+
+    const GetUsers = async () => {
+        try {
+            const fetched = await getUsersService(rdxUser.credentials.token)
+
+            if (!fetched.success) {
+                console.log(fetched.message)
+            }
+
+            console.log(fetched.message)
+
+            setUser(fetched.data)
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const inputHandler = (e) => {
         setMessageCredentials((prevState) => ({
@@ -41,6 +64,25 @@ export const ChatDetail = () => {
         }
     }, [detailRdx]);
 
+    const getUsersChat = async () => {
+        try {
+            const fetched = await getUsersFromChatService(detailRdx?.chats?.id, rdxUser.credentials.token)
+
+            if (!fetched.success) {
+                console.log(fetched.message)
+            }
+
+            console.log(fetched.message)
+
+            setUsersChat(fetched.data)
+
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const bringMessages = async () => {
 
         try {
@@ -61,6 +103,8 @@ export const ChatDetail = () => {
     useEffect(() => {
         if (message.length === 0) {
             bringMessages()
+            getUsersChat()
+            GetUsers()
         }
     }, [message]);
 
@@ -111,7 +155,7 @@ export const ChatDetail = () => {
     const updateMessage = async (messageId) => {
 
 
-        const fetched = await updateMessageService(messageId, messageCredential,detailRdx?.chats?.id, rdxUser.credentials.token)
+        const fetched = await updateMessageService(messageId, messageCredential, detailRdx?.chats?.id, rdxUser.credentials.token)
         if (!fetched.success) {
             console.log(fetched.message)
         }
@@ -130,17 +174,61 @@ export const ChatDetail = () => {
         })
     }
 
+    const removeUserToChat = async (userId) => {
+        try {
+            const fetched = await removeUserToChatService(userId, detailRdx?.chats?.id, rdxUser.credentials.token)
+
+            if (!fetched.success) {
+                console.log(fetched.message)
+            }
+
+            console.log(fetched.message)
+
+            getUsersChat()
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const addUserToChat = async (userId) => {
+        try {
+            const fetched = await addUserToChatService(userId, detailRdx?.chats?.id, rdxUser.credentials.token)
+
+            if (!fetched.success) {
+                console.log(fetched.message)
+            }
+
+            console.log(fetched.message)
+
+            getUsersChat()
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <>
             <div className="d-flex row justify-content-center align-items-center ChatDetailSectionDesign">
                 <div className="d-flex row-1 sticky-top justify-content-start align-items-center navBarChatDetailDesign">
-                    <p>{detailRdx?.chats?.name}</p>
+
+                    <div className="d-flex col sticky-top justify-content-start align-items-center">
+                        <div className="d-flex col-4  justify-content-center align-items-center">
+                           <button><i class="bi bi-arrow-left"></i></button>
+                        </div>
+                        <div className="d-flex col-4  justify-content-center align-items-center">
+                            <p data-bs-toggle="modal" data-bs-target="#chatDetailModal">{detailRdx?.chats?.name}</p>
+                        </div>
+                        <div className="d-flex col-4  justify-content-center align-items-center">
+                        <button><i class="bi bi-box-arrow-right"></i></button>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="d-flex row-10 justify-content-center align-items-center messageSectionDesign">
 
-                    <div className="modal fade " id="editMessageModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade " role="dialog" id="editMessageModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog ">
                             <div className="modal-content">
                                 <div className="modal-header">
@@ -162,11 +250,85 @@ export const ChatDetail = () => {
                                 </div>
                                 <div className="modal-footer">
 
-                                    <button type="button" onClick={()=>updateMessage(messageCredential.id)}  className="btn buttonEditDesign " data-bs-dismiss="modal"><i class="bi bi-pencil-fill"></i></button>
+                                    <button type="button" onClick={() => updateMessage(messageCredential.id)} className="btn buttonEditDesign " data-bs-dismiss="modal"><i class="bi bi-pencil-fill"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div className="modal fade " role="dialog" id="chatDetailModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog ">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h3 className="modal-title fs-5" id="exampleModalLabel">{detailRdx?.chats?.name}</h3>
+                                    <button type="button" onClick={clearForm} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <h3 className="modal-title fs-5" id="exampleModalLabel">Integrantes</h3>
+                                    <div className="d-flex row justify-content-center align-items-center">
+                                        {usersChat.map(userChat => {
+                                            return (
+                                                <>
+
+                                                    <div className="d-flex row justify-content-center align-items-center">
+                                                        <div className="d-flex col justify-content-center align-items-center">
+                                                            <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                                                <img src={userChat.url_profile_image} width="40em" height="40em" alt="" />
+                                                            </div>
+                                                            <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                                                {userChat.name}
+                                                            </div>
+                                                            <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
+                                                                <button onClick={() => removeUserToChat(userChat.id)}><i class="bi bi-box-arrow-right"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </>)
+                                        })}
+
+
+                                    </div>
+                                </div>
+                                <div className="modal-body">
+
+                                    {detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id
+                                        && (<>
+                                            <h3>Agregar integrantes</h3>
+                                            {users.map(user => {
+                                                return (
+                                                    <>
+
+                                                        <div className="d-flex row justify-content-center align-items-center">
+                                                            <div className="d-flex col justify-content-center align-items-center">
+                                                                <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                                                    <img src={user.url_profile_image} width="40em" height="40em" alt="" />
+                                                                </div>
+                                                                <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                                                    {user.name}
+                                                                </div>
+                                                                <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
+                                                                    <button onClick={() => addUserToChat(user.id)}><i class="bi bi-box-arrow-right"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </>)
+                                            })}
+
+                                        </>)
+                                    }
+
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
 
                     <div className="d-flex row m-0 justify-content-end align-items-center">
 
