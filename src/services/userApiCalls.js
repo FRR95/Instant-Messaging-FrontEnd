@@ -47,6 +47,30 @@ export const updateProfileService = async (profile,token) => {
         return error;
     }
 };
+export const updateUserProfileService = async (userId,profile,token) => {
+    const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(profile),
+      };
+
+    try {
+        const response = await fetch(`${root}users/${userId}`, options);
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        return data;
+    } catch (error) {
+        return error;
+    }
+};
 export const getUsersService = async (token) => {
     const options = {
         method: "GET",
