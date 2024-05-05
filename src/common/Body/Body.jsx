@@ -5,6 +5,8 @@ import { Login } from "../../pages/Login/Login";
 import { Profile } from "../../pages/Profile/Profile";
 import { Chat } from "../../pages/Chat/Chat";
 import { ChatDetail } from "../../pages/ChatDetail/ChatDetail";
+import { Users } from "../../pages/Users/Users";
+import { UserProfileDetail } from "../../pages/UserProfileDetail/UserProfileDetail";
 
 
 
@@ -19,6 +21,8 @@ export const Body = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/chats" element={<Chat />} />
       <Route path="/chatdetail" element={<ChatDetail />} />
+      <Route path="/users" element={<Users />} />
+      <Route path="/userdetail" element={<UserProfileDetail />} />
     </Routes>
   );
 };
