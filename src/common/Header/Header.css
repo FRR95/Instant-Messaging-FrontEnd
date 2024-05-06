@@ -1,9 +1,11 @@
 .headerDesign{
-    background-color: rgb(151, 151, 250);
+    background-color: rgb(254, 254, 254);
     color: brown;
  
    margin:0;
    padding: 0;
+   border-top: 0.1px solid rgb(238, 238, 238);
+
    
 }
 

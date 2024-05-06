@@ -7,13 +7,15 @@ import { userData } from "../../app/slices/userSlice";
 import { useState } from "react";
 import { bringMessagesService } from "../../services/chatApiCalls";
 import { createMessageService, deleteMessageService, updateMessageService } from "../../services/messageApiCalls";
-import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { addUserToChatService, getUsersFromChatService, leaveChatService, removeUserToChatService } from "../../services/userChatApiCalls";
 import { getUsersService } from "../../services/userApiCalls";
+
+
 
 export const ChatDetail = () => {
     const detailRdx = useSelector(chatDetailData);
     const navigate = useNavigate();
+    const [loading, setLoadingSpinner] = useState(false);
     const rdxUser = useSelector(userData)
     const [message, setMessage] = useState([]);
     const [usersChat, setUsersChat] = useState([]);
@@ -28,19 +30,23 @@ export const ChatDetail = () => {
 
     const GetUsers = async () => {
         try {
+
+            setLoadingSpinner(true)
             const fetched = await getUsersService(rdxUser.credentials.token)
 
             if (!fetched.success) {
                 console.log(fetched.message)
+                setLoadingSpinner(false)
             }
 
             console.log(fetched.message)
-
             setUser(fetched.data)
+            setLoadingSpinner(false)
 
 
         } catch (error) {
             console.log(error)
+            setLoadingSpinner(false)
         }
     }
 
@@ -86,24 +92,31 @@ export const ChatDetail = () => {
     const bringMessages = async () => {
 
         try {
+            
             const fetched = await bringMessagesService(detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+                console.log(fetched.message);
+                setLoadingSpinner(false);
+
             }
 
             setMessage(fetched.data);
 
+            setLoadingSpinner(false);
+
+
 
         } catch (error) {
             console.log(error)
+            setLoadingSpinner(false);
         }
     }
 
     useEffect(() => {
         if (message.length === 0) {
             bringMessages()
-         
+
         }
     }, [message]);
     useEffect(() => {
@@ -116,6 +129,8 @@ export const ChatDetail = () => {
     const createMessage = async (chatId) => {
 
         try {
+
+           
             const fetched = await createMessageService(chatId, messageCredential, rdxUser.credentials.token)
 
             !fetched.success && console.log(fetched.message)
@@ -181,13 +196,18 @@ export const ChatDetail = () => {
 
     const removeUserToChat = async (userId) => {
         try {
+
+            setLoadingSpinner(true)
             const fetched = await removeUserToChatService(userId, detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
                 console.log(fetched.message)
+                setLoadingSpinner(false)
             }
 
             console.log(fetched.message)
+
+            setLoadingSpinner(false)
 
             getUsersChat()
 
@@ -213,7 +233,7 @@ export const ChatDetail = () => {
     }
     const leaveChat = async () => {
         try {
-            const fetched = await leaveChatService( detailRdx?.chats?.id, rdxUser.credentials.token)
+            const fetched = await leaveChatService(detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
                 console.log(fetched.message)
@@ -239,18 +259,20 @@ export const ChatDetail = () => {
 
                     <div className="d-flex col sticky-top justify-content-start align-items-center">
                         <div className="d-flex col-4  justify-content-center align-items-center">
-                           <button onClick={goToChatPage}><i class="bi bi-arrow-left"></i></button>
+                            <button onClick={goToChatPage}><i class="bi bi-arrow-left"></i></button>
                         </div>
                         <div className="d-flex col-4  justify-content-center align-items-center">
                             <p data-bs-toggle="modal" data-bs-target="#chatDetailModal">{detailRdx?.chats?.name}</p>
                         </div>
                         <div className="d-flex col-4  justify-content-center align-items-center">
-                        <button onClick={leaveChat}><i class="bi bi-box-arrow-right"></i></button>
+                            <button onClick={leaveChat}><i class="bi bi-box-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <div className="d-flex row-10 justify-content-center align-items-center messageSectionDesign">
+
+
 
                     <div className="modal fade " role="dialog" id="editMessageModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog ">
@@ -285,6 +307,10 @@ export const ChatDetail = () => {
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h3 className="modal-title fs-5" id="exampleModalLabel">{detailRdx?.chats?.name}</h3>
+
+                                    {loading && <div className="spinner-grow fs-5" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>}
                                     <button type="button" onClick={clearForm} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
@@ -356,6 +382,8 @@ export const ChatDetail = () => {
 
                     <div className="d-flex row m-0 justify-content-end align-items-center">
 
+
+
                         {message.length > 0
                             ? (<>{message.map(
                                 messages => {
@@ -364,20 +392,23 @@ export const ChatDetail = () => {
                                             <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex row m-0 justify-content-end align-items-center") : ("d-flex row m-0 justify-content-start align-items-center")}>
                                                 <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex row my-2 justify-content-end align-items-center ownMessageCardDesign ") : ("d-flex row my-2 justify-content-start align-items-center notOwnMessageCardDesign")}>
                                                     <div className="d-flex row-2 justify-content-end align-items-center">
-                                                        {rdxUser?.credentials?.profileDetail?.id === messages.user_id ? (rdxUser?.credentials?.profileDetail?.name) : ("Autor")}
-                                                        <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex col  justify-content-center align-items-center") : ("d-none")}>
-                                                            <div className="d-flex col-6 justify-content-center align-items-center">
+                                                        {rdxUser?.credentials?.profileDetail?.id === messages.user_id ? (rdxUser?.credentials?.profileDetail?.name) : (messages.user.name)}
+                                                        <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex col  justify-content-end align-items-center") : ("d-none")}>
+                                                            <div className="d-flex col-4 justify-content-end align-items-center">
                                                                 <button onClick={() => deleteMessage(messages.id)}><i className="bi bi-trash"></i></button>
                                                             </div>
-                                                            <div className="d-flex col-6 justify-content-center align-items-center">
+                                                            <div className="d-flex col-4 justify-content-end align-items-center">
                                                                 <button data-bs-toggle="modal" data-bs-target="#editMessageModal" onClick={() => AddInfoToForm(messages)}><i className="bi bi-pencil"></i></button>
                                                             </div>
 
 
                                                         </div>
                                                     </div>
-                                                    <div className="d-flex row-10 justify-content-end align-items-center">
+                                                    <div className="d-flex row-8 justify-content-end align-items-center">
                                                         {messages.content}
+                                                    </div>
+                                                    <div className="d-flex row-2 justify-content-end align-items-center">
+                                                        {new Date(messages.created_at).toDateString()}
                                                     </div>
                                                 </div>
                                             </div>

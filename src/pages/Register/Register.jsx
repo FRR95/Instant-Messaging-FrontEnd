@@ -4,8 +4,13 @@ import { CustomInput } from "../../components/CustomInput/CustomInput"
 import "./Register.css"
 import { registerService } from "../../services/authApiCalls"
 import { validation } from "../../utils/validations"
+import { CustomLink } from "../../components/CustomLink/CustomLink"
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
+
+    const Navigate = useNavigate()
+    const [loading, setLoadingSpinner] = useState(false);
 
     const [userCredentials, setUser] = useState({
         name: "",
@@ -49,17 +54,25 @@ export const Register = () => {
                     throw new Error("Todos los campos tienen que estar rellenos");
                 }
             }
+            setLoadingSpinner(true)
             const fetched = await registerService(userCredentials)
 
             if (!fetched.success) {
 
                 console.log(fetched.message)
+                setLoadingSpinner(false)
             }
 
             console.log(fetched.message)
+            setLoadingSpinner(false)
+
+            setTimeout(() => {
+                Navigate("/login")
+            }, 2000);
 
         } catch (error) {
             console.log(error)
+            setLoadingSpinner(false)
         }
 
     }
@@ -68,7 +81,7 @@ export const Register = () => {
             <div className="d-flex col justify-content-center align-items-center flex-column registerSectionDesign">
 
 
-                <h3>REGÍSTRATE</h3>
+                <h3 className="fs-5">REGÍSTRATE</h3>
 
                 <label>Nombre</label>
                 <CustomInput
@@ -124,9 +137,13 @@ export const Register = () => {
                     onClick={signInMe}
                 />
 
+                {loading && <div className="spinner-grow fs-5" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>}
 
 
-                {/* <p>¿Ya tienes cuenta? <CustomLink path={"/login"} title={"Inicia sesión"} /></p> */}
+
+                <p>¿Ya tienes cuenta? <CustomLink path={"/login"} title={"Inicia sesión"} /></p>
 
             </div>
 

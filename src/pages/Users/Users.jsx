@@ -79,6 +79,8 @@ export const Users = () => {
 
         <>
             <div className="d-flex row justify-content-center align-items-center  usersSectionDesign">
+
+
                 {users.length > 0
                     ? (<>{users.map(user => {
                         return (<>

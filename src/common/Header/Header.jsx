@@ -1,12 +1,14 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Header.css"
-import { userData } from "../../app/slices/userSlice";
+import { logout, userData } from "../../app/slices/userSlice";
+import { CustomLink } from "../../components/CustomLink/CustomLink";
 
 
 export const Header = () => {
     const rdxUser = useSelector(userData);
+    const dispatch = useDispatch();
 
- 
+
 
     return (
         <>
@@ -19,8 +21,15 @@ export const Header = () => {
 
                         <div className="d-flex col m-1 justify-content-center align-items-center ">
                             <div className="d-flex row  justify-content-center align-items-center ">
-                                <i className="bi bi-chat"></i>
-                                Chats
+                                <div className="d-flex row  justify-content-center align-items-center ">
+
+                                    <CustomLink
+                                        path={"/chats"}
+                                        icon={"bi bi-chat"}
+                                        title={"Chats"}
+                                    />
+
+                                </div>
                             </div>
 
                         </div>
@@ -28,13 +37,28 @@ export const Header = () => {
 
 
                         <div className="d-flex col m-1 justify-content-center align-items-center ">
-                            
-                            <img src={rdxUser?.credentials?.profileDetail?.url_profile_image} width="40em" height="40em" alt="" />
+
+
+
+                            <CustomLink
+                                path={"/profile"}
+
+                                title={<img src={rdxUser?.credentials?.profileDetail?.url_profile_image} width="40em" height="40em" alt="" />}
+                                auxiliartitle={rdxUser?.credentials?.profileDetail?.name}
+                            />
+
+                           
 
                         </div>
 
-                        <div className="d-flex col m-1 justify-content-center align-items-center ">
-                            <i className="bi bi-box-arrow-right"></i>
+                        <div onClick={() => dispatch(logout({ credentials: "" }))} className="d-flex col m-1 justify-content-center align-items-center ">
+
+                            <CustomLink
+                                icon={"bi bi-box-arrow-right"}
+                                title={"LogOut"}
+                                path={"/"}
+                               
+                            />
 
                         </div>
 
@@ -46,14 +70,34 @@ export const Header = () => {
                         <>
                             <div className="d-flex col m-1 justify-content-center align-items-center ">
 
-                                <i className="bi bi-house"></i>
+                               
+
+                                <CustomLink
+                                icon={"bi bi-house"}
+                                title={"Inicio"}
+                                path={"/"}
+                              
+                               
+                            />
 
                             </div>
                             <div className="d-flex col m-1 justify-content-center align-items-center ">
-                                <p>Register</p>
+                            <CustomLink
+                                icon={"bi bi-door-open"}
+                                title={"Registrate"}
+                                path={"/register"}
+                              
+                               
+                            />
                             </div>
                             <div className="d-flex col m-1 justify-content-center align-items-center ">
-                                <p>LogIn</p>
+                            <CustomLink
+                                icon={"bi bi-person-circle"}
+                                title={"Inicia sesión"}
+                                path={"/login"}
+                              
+                               
+                            />
                             </div>
                         </>
 

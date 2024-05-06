@@ -9,10 +9,13 @@ import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { validation } from "../../utils/validations";
 
 
+
 export const Chat = () => {
     const rdxUser = useSelector(userData);
     const navigate = useNavigate()
     const dispatch = useDispatch();
+
+    const [loading, setLoadingSpinner] = useState(false);
 
     const [chat, setChat] = useState([]);
 
@@ -45,13 +48,19 @@ export const Chat = () => {
     const getUserChats = async () => {
         try {
 
+            setLoadingSpinner(true)
+
             const fetched = await getUserChatsService(rdxUser.credentials.token);
 
             if (!fetched.success) {
                 console.log(fetched.message)
+                setLoadingSpinner(false)
             }
 
             setChat(fetched.data);
+            console.log(fetched.data)
+
+            setLoadingSpinner(false)
 
 
 
@@ -84,12 +93,16 @@ export const Chat = () => {
     const createChat = async () => {
         try {
 
+            setLoadingSpinner(true)
+
             const fetched = await createChatService(chatCredential, rdxUser?.credentials?.token)
 
             if (!fetched.success) {
                 console.log(fetched.message)
+                setLoadingSpinner(false)
             }
             console.log(fetched.message)
+            setLoadingSpinner(false)
             getUserChats()
         } catch (error) {
             console.log(error)
@@ -99,11 +112,14 @@ export const Chat = () => {
 
     const deleteChat = async (chatId) => {
         try {
+            setLoadingSpinner(true)
             const fetched = await deleteChatService(chatId, rdxUser?.credentials?.token)
             if (!fetched.success) {
                 console.log(fetched.message)
+                setLoadingSpinner(false)
             }
             console.log(fetched.message)
+            setLoadingSpinner(false)
             getUserChats()
 
         } catch (error) {
@@ -122,13 +138,17 @@ export const Chat = () => {
 
     const updateChat = async (chatId) => {
 
+        setLoadingSpinner(true)
+
 
         const fetched = await updateChatService(chatId, chatCredential, rdxUser.credentials.token)
         if (!fetched.success) {
             console.log(fetched.message)
+            setLoadingSpinner(false)
         }
 
         console.log(fetched.message)
+        setLoadingSpinner(false)
         getUserChats()
 
         clearForm()
@@ -142,13 +162,21 @@ export const Chat = () => {
         })
     }
 
-  
+
 
 
 
     return (
         <>
             <div className="d-flex row justify-content-center align-items-center  chatDesign">
+
+                <h3 className="fs-5">Tus chats</h3>
+
+
+                {loading && <div className="spinner-grow fs-5" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>}
+
 
 
                 <div className="modal fade " id="newChatModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,20 +188,24 @@ export const Chat = () => {
                             </div>
                             <div className="modal-body">
 
+                                <div className="d-flex row justify-content-center align-items-center">
 
-                                <CustomInput
-                                    type="text"
-                                    name="name"
-                                    placeholder={"Nombre del nuevo grupo"}
-                                    value={chatCredential.name || ""}
-                                    changeEmit={inputHandler}
-                                    onBlurFunction={(e) => checkError(e)}
-                                />
-                                <div className="error">{credencialesError.nameError}</div>
+
+                                    <CustomInput
+                                        type="text"
+                                        name="name"
+                                        design={"input-design"}
+                                        placeholder={"Nombre del nuevo grupo"}
+                                        value={chatCredential.name || ""}
+                                        changeEmit={inputHandler}
+                                        onBlurFunction={(e) => checkError(e)}
+                                    />
+                                    <div className="error">{credencialesError.nameError}</div>
+                                </div>
                             </div>
                             <div className="modal-footer">
 
-                                <button type="button" onClick={createChat} className="btn buttonEditDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i>{`Crear nuevo chat`}</button>
+                                <button type="button" onClick={createChat} className="btn addButtonDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i></button>
                             </div>
                         </div>
                     </div>
@@ -187,40 +219,48 @@ export const Chat = () => {
                                 <button type="button" onClick={clearForm} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
+                                <div className="d-flex row justify-content-center align-items-center">
 
-
-                                <CustomInput
-                                    type="text"
-                                    name="name"
-                                    placeholder={"Nombre del nuevo grupo"}
-                                    value={chatCredential.name || ""}
-                                    changeEmit={inputHandler}
-                                    onBlurFunction={(e) => checkError(e)}
-                                />
-                                <div className="error">{credencialesError.nameError}</div>
+                                    <CustomInput
+                                        type="text"
+                                        name="name"
+                                        design={"input-design"}
+                                        placeholder={"Nuevo nombre del grupo"}
+                                        value={chatCredential.name || ""}
+                                        changeEmit={inputHandler}
+                                        onBlurFunction={(e) => checkError(e)}
+                                    />
+                                    <div className="error">{credencialesError.nameError}</div>
+                                </div>
                             </div>
                             <div className="modal-footer">
 
-                                <button type="button" onClick={() => updateChat(chatCredential.id)} className="btn buttonEditDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i>{`Editar chat`}</button>
+                                <button type="button" onClick={() => updateChat(chatCredential.id)} className="btn editButtonDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
 
+
+
                 {chat.length > 0
                     ? (<>{chat.map(chats => {
                         return (
                             <>
-                               
+
                                 <div className="d-flex row  justify-content-center align-items-center chatCardSectionDesign ">
-                                    <div onClick={() => manageChatDetail(chats)} className="d-flex row justify-content-center align-items-center chatCardDesign" >
+                                    <div className="d-flex row justify-content-center align-items-center chatCardDesign" >
                                         <div className="d-flex col justify-content-center align-items-center" >
-                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>{chats.name}</div>
-                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>{chats.author_id}</div>
-                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-none")}><button onClick={() => deleteChat(chats.id)}><i className="bi bi-trash"></i></button></div>
-                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-none")}><button data-bs-toggle="modal" data-bs-target="#updateChatModal" onClick={() => AddInfoToForm(chats)}><i className="bi bi-pencil"></i></button></div>
+
+
+                                            <div onClick={() => manageChatDetail(chats)} className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-8 justify-content-start align-items-center") : ("d-flex col-12 justify-content-start align-items-center")}>{chats.name}</div>
+                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-2 justify-content-center align-items-center") : ("d-none")}><button onClick={() => deleteChat(chats.id)}><i className="bi bi-trash"></i></button></div>
+                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-2 justify-content-center align-items-center") : ("d-none")}><button data-bs-toggle="modal" data-bs-target="#updateChatModal" onClick={() => AddInfoToForm(chats)}><i className="bi bi-pencil"></i></button></div>
+
 
                                         </div>
+
+
                                     </div>
                                 </div>
 

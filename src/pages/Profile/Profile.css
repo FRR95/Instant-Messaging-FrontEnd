@@ -1,7 +1,29 @@
 .profileDesign{
     margin: 0;
     padding: 0;
-
-    background-color: rgb(62, 244, 250);
-    /* height: 100vh; */
+    
+    background-color: rgb(255, 255, 255);
+   
+   
 }
+
+.logoImg{
+    width: 6em;
+    height: 4em;
+}
+
+label{
+    font-weight: bold;
+}
+
+.editButtonDesign{
+    width: 4em;
+     border-radius: 100%;
+     background-color: rgb(229, 255, 0);
+     color: rgb(0, 0, 0);
+      
+  }
+
+  .fs-5{
+    color: #3FE05C;
+  }
