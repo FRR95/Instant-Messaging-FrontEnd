@@ -8,21 +8,36 @@ import { ChatDetail } from "../../pages/ChatDetail/ChatDetail";
 import { Users } from "../../pages/Users/Users";
 import { UserProfileDetail } from "../../pages/UserProfileDetail/UserProfileDetail";
 
-
+import { useLocation } from 'react-router-dom';
+import { NavBar } from "../NavBar/NavBar";
+import { Header } from "../Header/Header";
 
 
 export const Body = () => {
+const location=useLocation()
+  
   return (
-    <Routes>
-      <Route path="*" element={<Navigate to={"/"} replace/>} />
-      <Route path="/" element={<Home />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/chats" element={<Chat />} />
-      <Route path="/chatdetail" element={<ChatDetail />} />
-      <Route path="/users" element={<Users />} />
-      <Route path="/userdetail" element={<UserProfileDetail />} />
-    </Routes>
+
+    <>
+
+{location.pathname !== '/chatdetail' &&  (<><NavBar/> <Header/> </>)}
+      
+      <Routes>
+        <Route path="*" element={<Navigate to={"/"} replace />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/chats" element={<Chat />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/userdetail" element={<UserProfileDetail />} />
+        <Route path="/chatdetail" element={<ChatDetail />} />
+      </Routes>
+     
+      
+      
+    </>
+
+
   );
 };
