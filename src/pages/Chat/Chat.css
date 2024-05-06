@@ -1,21 +1,26 @@
 .chatDesign{
     margin: 0;
     padding: 0;
-    background-color: rgb(62, 244, 250);
+    background-color: rgb(255, 255, 255);
+   
 }
 
 .chatCardDesign{
     margin: 0;
     padding: 0;
-    background-color: beige;
+    background-color: rgb(255, 255, 255);
 
 }
 .chatCardSectionDesign{
     margin: 0;
     padding: 0;
+   
 }
 
 .addButtonDesign{
-    width: 4em;
-    margin-right: 0.1em;
+  width: 4em;
+   border-radius: 100%;
+   background-color: green;
+   color: white;
+    
 }

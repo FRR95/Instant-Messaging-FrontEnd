@@ -10,7 +10,7 @@ export const Header = () => {
 
     return (
         <>
-            <div className="d-flex row sticky-bottom justify-content-center align-items-center headerDesign">
+            <div className="d-flex row  fixed-bottom justify-content-center align-items-center headerDesign">
 
 
                 {rdxUser?.credentials?.token

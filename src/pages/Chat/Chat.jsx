@@ -211,10 +211,10 @@ export const Chat = () => {
                     ? (<>{chat.map(chats => {
                         return (
                             <>
-                                {/* onClick={() => manageChatDetail(chats)} */}
+                               
                                 <div className="d-flex row  justify-content-center align-items-center chatCardSectionDesign ">
-                                    <div className="d-flex row justify-content-center align-items-center chatCardDesign" >
-                                        <div className="d-flex col justify-content-center align-items-center" onClick={() => manageChatDetail(chats)}>
+                                    <div onClick={() => manageChatDetail(chats)} className="d-flex row justify-content-center align-items-center chatCardDesign" >
+                                        <div className="d-flex col justify-content-center align-items-center" >
                                             <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>{chats.name}</div>
                                             <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>{chats.author_id}</div>
                                             <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-3 justify-content-center align-items-center") : ("d-none")}><button onClick={() => deleteChat(chats.id)}><i className="bi bi-trash"></i></button></div>
@@ -232,8 +232,8 @@ export const Chat = () => {
 
 
 
-                <div className="d-flex row z-1 justify-content-end  position-absolute  align-items-center ">
-                    <button data-bs-toggle="modal" data-bs-target="#newChatModal" className="d-flex  row z-1 justify-content-start  position-absolute  align-items-center addButtonDesign"><i className="bi bi-plus-square"></i></button>
+                <div className="d-flex row z-1 justify-content-center m-1 align-items-center  ">
+                    <button data-bs-toggle="modal" data-bs-target="#newChatModal" className="d-flex addButtonDesign  row z-1 justify-content-center   align-items-center "><i className="bi bi-plus-square"></i></button>
                 </div>
 
 

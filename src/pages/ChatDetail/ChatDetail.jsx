@@ -8,7 +8,7 @@ import { useState } from "react";
 import { bringMessagesService } from "../../services/chatApiCalls";
 import { createMessageService, deleteMessageService, updateMessageService } from "../../services/messageApiCalls";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
-import { addUserToChatService, getUsersFromChatService, removeUserToChatService } from "../../services/userChatApiCalls";
+import { addUserToChatService, getUsersFromChatService, leaveChatService, removeUserToChatService } from "../../services/userChatApiCalls";
 import { getUsersService } from "../../services/userApiCalls";
 
 export const ChatDetail = () => {
@@ -103,10 +103,15 @@ export const ChatDetail = () => {
     useEffect(() => {
         if (message.length === 0) {
             bringMessages()
+         
+        }
+    }, [message]);
+    useEffect(() => {
+        if (usersChat.length === 0) {
             getUsersChat()
             GetUsers()
         }
-    }, [message]);
+    }, [usersChat]);
 
     const createMessage = async (chatId) => {
 
@@ -206,22 +211,41 @@ export const ChatDetail = () => {
             console.log(error)
         }
     }
+    const leaveChat = async () => {
+        try {
+            const fetched = await leaveChatService( detailRdx?.chats?.id, rdxUser.credentials.token)
+
+            if (!fetched.success) {
+                console.log(fetched.message)
+            }
+
+            console.log(fetched.message)
+
+            navigate("/chats");
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const goToChatPage = async () => {
+        navigate("/chats");
+    }
 
 
     return (
         <>
             <div className="d-flex row justify-content-center align-items-center ChatDetailSectionDesign">
-                <div className="d-flex row-1 sticky-top justify-content-start align-items-center navBarChatDetailDesign">
+                <div className="d-flex row-1 sticky-top  justify-content-start align-items-center navBarChatDetailDesign">
 
                     <div className="d-flex col sticky-top justify-content-start align-items-center">
                         <div className="d-flex col-4  justify-content-center align-items-center">
-                           <button><i class="bi bi-arrow-left"></i></button>
+                           <button onClick={goToChatPage}><i class="bi bi-arrow-left"></i></button>
                         </div>
                         <div className="d-flex col-4  justify-content-center align-items-center">
                             <p data-bs-toggle="modal" data-bs-target="#chatDetailModal">{detailRdx?.chats?.name}</p>
                         </div>
                         <div className="d-flex col-4  justify-content-center align-items-center">
-                        <button><i class="bi bi-box-arrow-right"></i></button>
+                        <button onClick={leaveChat}><i class="bi bi-box-arrow-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -272,10 +296,10 @@ export const ChatDetail = () => {
 
                                                     <div className="d-flex row justify-content-center align-items-center">
                                                         <div className="d-flex col justify-content-center align-items-center">
-                                                            <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                                            <div className={"d-flex col-4 justify-content-center align-items-center"}>
                                                                 <img src={userChat.url_profile_image} width="40em" height="40em" alt="" />
                                                             </div>
-                                                            <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                                            <div className={"d-flex col-4 justify-content-center align-items-center"}>
                                                                 {userChat.name}
                                                             </div>
                                                             <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
@@ -364,8 +388,8 @@ export const ChatDetail = () => {
 
                     </div>
                 </div>
-                <div className="d-flex row-1  justify-content-center align-items-center">
-                    <div className="d-flex col sticky-bottom justify-content-center align-items-center">
+                <div className="d-flex row-1 sticky-bottom   justify-content-center align-items-center">
+                    <div className="d-flex col  justify-content-center align-items-center">
                         <div className="d-flex col-11 justify-content-start align-items-center">
                             <textarea
                                 className="textAreaDesign" name="content" id="" cols="30" rows="10"
