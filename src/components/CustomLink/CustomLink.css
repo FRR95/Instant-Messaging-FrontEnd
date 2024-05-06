@@ -1,0 +1,20 @@
+.clink-design {
+
+    color: #3FE05C;
+    font-weight: bold;
+
+    margin: 1em;
+
+    transition: 0.3s;
+    user-select: none;
+   
+
+    background-color: rgb(254, 254, 254);
+}
+
+.clink-design:focus {
+
+    
+    background-color: rgb(110, 106, 106);
+    cursor: pointer;
+}
