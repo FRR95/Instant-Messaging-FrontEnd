@@ -38,17 +38,17 @@ export const ChatDetail = () => {
             const fetched = await getUsersService(rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+                
                 setLoadingSpinner(false)
             }
 
-            console.log(fetched.message)
+           
             setUser(fetched.data)
             setLoadingSpinner(false)
 
 
         } catch (error) {
-            console.log(error)
+           
             setLoadingSpinner(false)
         }
     }
@@ -75,20 +75,21 @@ export const ChatDetail = () => {
 
     const getUsersChat = async () => {
         try {
+            setLoadingSpinner(true)
             const fetched = await getUsersFromChatService(detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+                setLoadingSpinner(false)
             }
 
-            console.log(fetched.message)
+            setLoadingSpinner(false)
 
             setUsersChat(fetched.data)
 
 
 
         } catch (error) {
-            console.log(error)
+            setLoadingSpinner(false)
         }
     }
 
@@ -101,20 +102,20 @@ export const ChatDetail = () => {
             const fetched = await bringMessagesService(detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message);
-                setLoadingSpinner(false);
+                
+              return  setLoadingSpinner(false);
 
             }
 
             setMessage(fetched.data);
-            console.log(fetched.data);
+           
 
             setLoadingSpinner(false);
 
 
 
         } catch (error) {
-            console.log(error)
+          
             setLoadingSpinner(false);
         }
     }
@@ -146,7 +147,7 @@ export const ChatDetail = () => {
             })
 
         } catch (error) {
-            console.log(error)
+          
         }
     }
     const clearForm = async () => {
@@ -160,28 +161,29 @@ export const ChatDetail = () => {
     const deleteMessage = async (messageId) => {
 
         try {
+            setLoadingSpinner(true)
             const fetched = await deleteMessageService(messageId, detailRdx?.chats?.id, rdxUser.credentials.token)
             if (!fetched.success) {
-                console.log(fetched.message)
+              return  setLoadingSpinner(false)
             }
-            console.log(fetched.message)
+             setLoadingSpinner(false)
 
             bringMessages()
 
 
         } catch (error) {
-            console.log(error)
+          return  setLoadingSpinner(false)
         }
     }
     const updateMessage = async (messageId) => {
 
-
+          setLoadingSpinner(true)
         const fetched = await updateMessageService(messageId, messageCredential, detailRdx?.chats?.id, rdxUser.credentials.token)
         if (!fetched.success) {
-            console.log(fetched.message)
+            return  setLoadingSpinner(false)
         }
 
-        console.log(fetched.message)
+       
         bringMessages()
 
         clearForm()
@@ -202,18 +204,18 @@ export const ChatDetail = () => {
             const fetched = await removeUserToChatService(userId, detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
-                setLoadingSpinner(false)
+                
+               return setLoadingSpinner(false)
             }
 
-            console.log(fetched.message)
+           
 
             setLoadingSpinner(false)
 
             getUsersChat()
 
         } catch (error) {
-            console.log(error)
+            return setLoadingSpinner(false)
         }
     }
     const addUserToChat = async (userId) => {
@@ -223,34 +225,31 @@ export const ChatDetail = () => {
             const fetched = await addUserToChatService(userId, detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
-                setLoadingSpinner(false)
+                
+                return setLoadingSpinner(false)
             }
 
-            console.log(fetched.message)
+            
 
             setLoadingSpinner(false)
 
             getUsersChat()
 
         } catch (error) {
-            console.log(error)
+            return setLoadingSpinner(false)
         }
     }
     const leaveChat = async () => {
         try {
             const fetched = await leaveChatService(detailRdx?.chats?.id, rdxUser.credentials.token)
 
-            if (!fetched.success) {
-                console.log(fetched.message)
-            }
 
-            console.log(fetched.message)
+          
 
             navigate("/chats");
 
         } catch (error) {
-            console.log(error)
+          
         }
     }
     const goToChatPage = async () => {
@@ -453,7 +452,7 @@ export const ChatDetail = () => {
 
 
 
-                    <div className="d-flex row m-0 justify-content-end align-items-center">
+                    <div className="d-flex row m-0  justify-content-end align-items-center messagesSection">
 
 
 
@@ -462,7 +461,7 @@ export const ChatDetail = () => {
                                 messages => {
                                     return (
                                         <>
-                                            <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex row m-0 justify-content-end align-items-center") : ("d-flex row m-0 justify-content-start align-items-center")}>
+                                            <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex row  justify-content-end align-items-center") : ("d-flex row  justify-content-start align-items-center")}>
                                                 <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex row my-2 justify-content-end align-items-center ownMessageCardDesign ") : ("d-flex row my-2 justify-content-start align-items-center notOwnMessageCardDesign")}>
                                                     <div className="d-flex row-2 justify-content-end align-items-center topSectionMessage">
                                                         <div className="d-flex col-4 justify-content-start align-items-center">

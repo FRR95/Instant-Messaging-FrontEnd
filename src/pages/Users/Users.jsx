@@ -11,7 +11,7 @@ export const Users = () => {
     const rdxUser = useSelector(userData);
     const navigate = useNavigate()
     const dispatch = useDispatch();
-
+    const [loading, setLoadingSpinner] = useState(false);
     const [users, setUser] = useState([]);
 
     useEffect(() => {
@@ -24,19 +24,21 @@ export const Users = () => {
 
     const GetUsers = async () => {
         try {
+
+            
             const fetched = await getUsersService(rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+             
             }
 
-            console.log(fetched.message)
+             
 
             setUser(fetched.data)
 
 
         } catch (error) {
-            console.log(error)
+           
         }
     }
 
@@ -49,19 +51,21 @@ export const Users = () => {
     const deleteUser = async (userId) => {
 
         try {
+
+            setLoadingSpinner(true)
             const fetched = await deleteUserService(userId, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+              return  setLoadingSpinner(false)
             }
 
-            console.log(fetched.message)
+            setLoadingSpinner(false)
 
             GetUsers()
 
 
         } catch (error) {
-            console.log(error)
+          return  setLoadingSpinner(false)
         }
     }
 
@@ -81,19 +85,23 @@ export const Users = () => {
         <>
             <div className="d-flex row justify-content-center align-items-center  usersSectionDesign">
 
+            {loading && <div className="spinner-grow fs-5" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>}
+
 
                 {users.length > 0
                     ? (<>{users.map(user => {
                         return (<>
                             <div className="d-flex row  justify-content-center align-items-center usersCardSectionDesign ">
-                                <div className="d-flex row justify-content-center align-items-center userCardDesign" onClick={() => manageUserDetail(user)} >
+                                <div className="d-flex row mb-2 justify-content-center align-items-center userCardDesign"  >
                                     <div className="d-flex col justify-content-center align-items-center">
-                                        <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                        <div onClick={() => manageUserDetail(user)} className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-start align-items-center") : ("d-flex col-6 justify-content-start align-items-center")}>
                                             <img src={user.url_profile_image} width="40em" height="40em" alt="" />
                                         </div>
-                                        <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
+                                        <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-start  align-items-center") : ("d-flex col-6 justify-content-start  align-items-center")}>
                                             <div className="d-flex row justify-content-center align-items-center">
-                                                <div className="d-flex row-6 justify-content-center align-items-center">
+                                                <div onClick={() => manageUserDetail(user)} className="d-flex row-6 justify-content-center align-items-center">
                                                     {user.name}
                                                 </div>
                                                 <div className="d-flex row-6 justify-content-center align-items-center">

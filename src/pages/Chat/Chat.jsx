@@ -54,12 +54,12 @@ export const Chat = () => {
             const fetched = await getUserChatsService(rdxUser.credentials.token);
 
             if (!fetched.success) {
-                console.log(fetched.message)
+               
                 setLoadingSpinner(false)
             }
 
             setChat(fetched.data);
-            console.log(fetched.data)
+          
 
             setLoadingSpinner(false)
 
@@ -67,7 +67,7 @@ export const Chat = () => {
 
 
         } catch (error) {
-            console.log(error)
+          
         }
     };
 
@@ -99,14 +99,14 @@ export const Chat = () => {
             const fetched = await createChatService(chatCredential, rdxUser?.credentials?.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+               
                 setLoadingSpinner(false)
             }
-            console.log(fetched.message)
+            
             setLoadingSpinner(false)
             getUserChats()
         } catch (error) {
-            console.log(error)
+          
 
         }
     }
@@ -116,15 +116,15 @@ export const Chat = () => {
             setLoadingSpinner(true)
             const fetched = await deleteChatService(chatId, rdxUser?.credentials?.token)
             if (!fetched.success) {
-                console.log(fetched.message)
+                
                 setLoadingSpinner(false)
             }
-            console.log(fetched.message)
+           
             setLoadingSpinner(false)
             getUserChats()
 
         } catch (error) {
-            console.log(error)
+           
         }
     }
 
@@ -144,11 +144,11 @@ export const Chat = () => {
 
         const fetched = await updateChatService(chatId, chatCredential, rdxUser.credentials.token)
         if (!fetched.success) {
-            console.log(fetched.message)
+            
             setLoadingSpinner(false)
         }
 
-        console.log(fetched.message)
+      
         setLoadingSpinner(false)
         getUserChats()
 
@@ -171,7 +171,7 @@ export const Chat = () => {
         <>
             <div className="d-flex row justify-content-center align-items-center  chatDesign">
 
-                <h3 className="fs-5">Tus chats</h3>
+                <h3 className="mb-3 fs-5">Tus chats</h3>
 
 
                 {loading && <div className="spinner-grow fs-5" role="status">
@@ -269,7 +269,7 @@ export const Chat = () => {
                                         <div className="d-flex col justify-content-center align-items-center" >
 
 
-                                            <div onClick={() => manageChatDetail(chats)} className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-8 justify-content-start align-items-center") : ("d-flex col-12 justify-content-start align-items-center")}>{chats.name}</div>
+                                            <div onClick={() => manageChatDetail(chats)} className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-8 fw-bold justify-content-start align-items-center") : ("d-flex fw-bold col-12 justify-content-start align-items-center")}>{chats.name}</div>
                                             <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-2 justify-content-center align-items-center") : ("d-none")}>
 
                                                 <CustomButton

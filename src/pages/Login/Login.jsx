@@ -4,22 +4,26 @@ import { CustomInput } from "../../components/CustomInput/CustomInput.jsx"
 import { validation } from "../../utils/validations.js";
 import "./Login.css"
 import { useDispatch } from "react-redux";
-import { decodeToken } from "react-jwt";
 import { loginService } from "../../services/authApiCalls.js";
 import { useState } from "react";
 import { GetProfile } from "../../services/userApiCalls.js";
 import { CustomLink } from "../../components/CustomLink/CustomLink.jsx";
 import { useNavigate } from "react-router-dom";
 
+
 export const Login = () => {
 
   const dispatch = useDispatch();
-  const Navigate =useNavigate()
+  const Navigate = useNavigate()
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
   const [loading, setLoadingSpinner] = useState(false);
+
+  const [msgError, setMsgError] = useState("");
+
+  const [msgSuccess, setMsgSuccess] = useState("");
 
   const inputHandler = (e) => {
     setUser((prevState) => ({
@@ -48,14 +52,14 @@ export const Login = () => {
 
     try {
 
-     
+
 
       for (let elemento in user) {
 
         if (user[elemento] === "") {
-
-          console.log("Todos los campos tienen que estar rellenos")
           setLoadingSpinner(false)
+          return setMsgError(`Todos los campos tienen que estar rellenos`)
+
 
         }
 
@@ -68,8 +72,8 @@ export const Login = () => {
 
       if (!fetched.success) {
 
-        console.log(fetched.message);
         setLoadingSpinner(false)
+        return setMsgError(`${fetched.message}`)
       }
 
       if (fetched.token) {
@@ -87,19 +91,19 @@ export const Login = () => {
 
       }
 
-      console.log(fetched.message)
+      setMsgSuccess(`${fetched.message}`)
 
       setLoadingSpinner(false)
 
       setTimeout(() => {
-      Navigate("/chats")
+        Navigate("/chats")
       }, 2000);
 
 
     }
     catch (error) {
-      console.log(error)
       setLoadingSpinner(false)
+      return setMsgError(`${error}`)
     }
 
   };
@@ -138,12 +142,17 @@ export const Login = () => {
           title={"Login"}
           onClick={loginMe}
         />
-        {loading &&  <div className="spinner-grow fs-5" role="status">
+        {loading && <div className="spinner-grow fs-5" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>}
 
+        <div className="error">{msgError}</div>
+        <div className="fs-5">{msgSuccess}</div>
+
 
         <p>¿Aun no tienes cuenta? </p> <CustomLink path={"/register"} title={"Regístrate"} />
+
+
 
       </div>
 

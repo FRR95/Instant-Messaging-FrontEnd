@@ -30,6 +30,7 @@ export const UserProfileDetail = () => {
     const navigate = useNavigate()
     const rdxUser = useSelector(userData);
     const rdxUserDetail = useSelector(userDetailData);
+    const [loading, setLoadingSpinner] = useState(false);
 
     useEffect(() => {
 
@@ -59,18 +60,20 @@ export const UserProfileDetail = () => {
 
     const updateProfile = async (userId) => {
         try {
+
+            setLoadingSpinner(true)
             const fetched = await updateUserProfileService(userId, user, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+                return setLoadingSpinner(false)
             }
 
-            console.log(fetched.message)
 
-            console.log(user);
+
+            setLoadingSpinner(false)
 
         } catch (error) {
-            console.log(error)
+            setLoadingSpinner(false)
         }
     }
 
@@ -141,6 +144,10 @@ export const UserProfileDetail = () => {
 
 
                     />
+
+                    {loading && <div className="spinner-grow fs-5" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>}
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
 

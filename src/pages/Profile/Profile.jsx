@@ -12,6 +12,7 @@ import { CustomButton } from "../../components/CustomButton/CustomButton";
 export const Profile = () => {
     const rdxUser = useSelector(userData);
     const navigate = useNavigate()
+    const [loading, setLoadingSpinner] = useState(false);
 
     const [user, setUser] = useState({
         url_profile_image: "",
@@ -39,11 +40,11 @@ export const Profile = () => {
 
     const getUserProfile = async () => {
         try {
-
+            setLoadingSpinner(true)
             const fetched = await GetProfile(rdxUser.credentials.token);
 
             if (!fetched.success) {
-                console.log(fetched.message)
+                return setLoadingSpinner(false)
             }
 
             setUser({
@@ -57,23 +58,27 @@ export const Profile = () => {
 
             });
 
+            return setLoadingSpinner(false)
+
         } catch (error) {
-            console.log(error)
+            return setLoadingSpinner(false)
         }
     };
 
     const updateProfile = async () => {
         try {
+
+            setLoadingSpinner(true)
             const fetched = await updateProfileService(user, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                console.log(fetched.message)
+                return setLoadingSpinner(false)
             }
 
-            console.log(fetched.message)
+            setLoadingSpinner(false)
 
         } catch (error) {
-            console.log(error)
+            return setLoadingSpinner(false)
         }
     }
 
@@ -127,14 +132,14 @@ export const Profile = () => {
                             </div>
                             <div className="modal-footer">
 
-                                
+
 
                                 <CustomButton
 
                                     icon={"bi bi-pencil-fill"}
                                     design={"updateButtonDesign"}
                                     onClick={updateProfile}
-                                    
+
                                     modal={"modal"}
 
 
@@ -156,6 +161,10 @@ export const Profile = () => {
 
 
                     />
+
+                    {loading && <div className="spinner-grow fs-5" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>}
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
 

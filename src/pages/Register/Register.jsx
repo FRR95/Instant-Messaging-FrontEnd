@@ -7,17 +7,25 @@ import { validation } from "../../utils/validations"
 import { CustomLink } from "../../components/CustomLink/CustomLink"
 import { useNavigate } from "react-router-dom";
 
+
 export const Register = () => {
 
     const Navigate = useNavigate()
     const [loading, setLoadingSpinner] = useState(false);
 
+    const [msgError, setMsgError] = useState("");
+
+    const [msgSuccess, setMsgSuccess] = useState("");
+
+    
     const [userCredentials, setUser] = useState({
         name: "",
         nickname: "",
         password: "",
         email: ""
     })
+
+
 
     const inputHandler = (e) => {
         setUser((prevState) => ({
@@ -51,7 +59,7 @@ export const Register = () => {
             for (let elemento in userCredentials) {
                 if (userCredentials[elemento] === "") {
 
-                    throw new Error("Todos los campos tienen que estar rellenos");
+                    return setMsgError("No has rellenado todos los campos")
                 }
             }
             setLoadingSpinner(true)
@@ -59,11 +67,11 @@ export const Register = () => {
 
             if (!fetched.success) {
 
-                console.log(fetched.message)
                 setLoadingSpinner(false)
+                return setMsgError(`${fetched.message}`)
             }
+             setMsgSuccess(`${fetched.message}`)
 
-            console.log(fetched.message)
             setLoadingSpinner(false)
 
             setTimeout(() => {
@@ -71,8 +79,8 @@ export const Register = () => {
             }, 2000);
 
         } catch (error) {
-            console.log(error)
             setLoadingSpinner(false)
+            return setMsgError(`${error}`)
         }
 
     }
@@ -141,9 +149,16 @@ export const Register = () => {
                     <span className="visually-hidden">Loading...</span>
                 </div>}
 
+            <div className="error">{msgError}</div>
+            <div className="fs-5">{msgSuccess}</div>
+
 
 
                 <p>¿Ya tienes cuenta? <CustomLink path={"/login"} title={"Inicia sesión"} /></p>
+
+
+         
+
 
             </div>
 

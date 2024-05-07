@@ -13,13 +13,18 @@
 
 .ownMessageCardDesign{
     background-color: rgb(152, 248, 152);
-    border-radius: 1em;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
     border: solid 1px rgb(177, 177, 177);
     width: 15em;
 }
 .notOwnMessageCardDesign{
     background-color: rgb(177, 177, 177);
-    border-radius: 1em;
+    border-top-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+   
     border: solid 1px rgb(177, 177, 177);
     width: 15em;
 }
@@ -31,4 +36,9 @@
 
 .topSectionMessage{
     border-bottom: 0.1px solid rgb(238, 238, 238);
+}
+
+.messagesSection{
+    padding-top: 5em;
+    padding-bottom: 5em;
 }
