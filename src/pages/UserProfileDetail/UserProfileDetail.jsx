@@ -167,7 +167,7 @@ export const UserProfileDetail = () => {
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
                     <label>Estado</label>
-                    {rdxUserDetail.user.is_active === 0 ? (<p>DESCONECTADO</p>) : (<p>EN LINEA</p>)}
+                    {rdxUserDetail.user.is_active === 0 ? (<p>DESCONECTADO 🔴</p>) : (<p>EN LINEA 🟢</p>)}
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
                     <label>Fecha de creación</label>

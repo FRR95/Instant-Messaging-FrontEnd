@@ -182,7 +182,7 @@ export const Profile = () => {
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
                     <label>Estado</label>
-                    {user.isActive === 0 ? (<p>DESCONECTADO</p>) : (<p>EN LINEA</p>)}
+                    {user.isActive === 0 ? (<p>DESCONECTADO 🔴</p>) : (<p>EN LINEA 🟢</p>)}
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
                     <label>Fecha de creación</label>

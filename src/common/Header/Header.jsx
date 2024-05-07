@@ -2,13 +2,45 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Header.css"
 import { logout, userData } from "../../app/slices/userSlice";
 import { CustomLink } from "../../components/CustomLink/CustomLink";
+import { useNavigate } from "react-router-dom";
+import { logOutService, userDisconnectService } from "../../services/authApiCalls";
 
 
 export const Header = () => {
     const rdxUser = useSelector(userData);
     const dispatch = useDispatch();
+    const Navigate = useNavigate()
+
+    const logOut = async() =>{
+        try {
+            const fetched1 = await  userDisconnectService(rdxUser?.credentials?.token)
+            const fetched = await  logOutService(rdxUser?.credentials?.token)
 
 
+            if(!fetched1.success){
+             console.log(fetched.message)
+            }
+ 
+            console.log(fetched1.message)
+
+           if(!fetched.success){
+            console.log(fetched.message)
+           }
+
+           console.log(fetched.message)
+
+
+           dispatch(logout({ credentials: "" }))
+
+          
+            Navigate("/")
+         
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -69,7 +101,7 @@ export const Header = () => {
                                 </div>
                             </div>
 
-                            <div onClick={() => dispatch(logout({ credentials: "" }))} className="d-flex col-3 m-1 justify-content-center align-items-center ">
+                            <div onClick={() => logOut()}  className="d-flex col-3 m-1 justify-content-center align-items-center ">
 
                                 <CustomLink
                                     icon={"bi bi-box-arrow-right"}
