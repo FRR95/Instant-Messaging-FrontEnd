@@ -80,7 +80,7 @@ export const UserProfileDetail = () => {
 
     return (
         <>
-            <div className="d-flex row justify-content-center align-items-center  profileDetailDesign">
+            <div className="d-flex row  justify-content-center align-items-center  profileDetailDesign">
                 <div className="modal fade " id="editProfileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog ">
                         <div className="modal-content">

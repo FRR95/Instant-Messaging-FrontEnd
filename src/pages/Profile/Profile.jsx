@@ -95,7 +95,7 @@ export const Profile = () => {
     }
     return (
         <>
-            <div className="d-flex row  justify-content-center align-items-center   profileDesign">
+            <div className="d-flex row  justify-content-center align-items-center profileDesign">
                 <div className="modal fade " id="editProfileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog ">
                         <div className="modal-content">

@@ -79,7 +79,7 @@ export const Chat = () => {
 
     useEffect(() => {
         if (chat.length === 0) {
-            getUserChats()
+           getUserChats() 
         }
     }, [chat])
 
