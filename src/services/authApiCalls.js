@@ -47,5 +47,51 @@ export const loginService = async (user) => {
         return error;
     }
 };
+export const logOutService = async (token) => {
+    const options = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    };
+
+    try {
+        const response = await fetch(`${root}logout`, options);
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        return data;
+    } catch (error) {
+        return error;
+    }
+};
+export const userDisconnectService = async (token) => {
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    };
+
+    try {
+        const response = await fetch(`${root}logout`, options);
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        return data;
+    } catch (error) {
+        return error;
+    }
+};
 
 
