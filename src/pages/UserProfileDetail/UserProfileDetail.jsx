@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { userDetailData } from "../../app/slices/userDetailSlice";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { updateUserProfileService } from "../../services/userApiCalls";
+import { CustomButton } from "../../components/CustomButton/CustomButton";
 
 export const UserProfileDetail = () => {
 
@@ -33,23 +34,23 @@ export const UserProfileDetail = () => {
     useEffect(() => {
 
         !rdxUser?.credentials?.token && (navigate("/"))
-           
+
 
     }, [rdxUser]);
 
     useEffect(() => {
 
         !rdxUserDetail?.user?.id && (navigate("/"))
-           
+
 
     }, [rdxUserDetail]);
 
     const AddInfoToForm = async (user) => {
         setUser({
             url_profile_image: user.url_profile_image,
-            name:  user.name,
-            nickname:  user.nickname,
-            email:  user.email,
+            name: user.name,
+            nickname: user.nickname,
+            email: user.email,
             biography: user.biography,
             isActive: user.isActive,
             created_at: user.created_at
@@ -58,16 +59,16 @@ export const UserProfileDetail = () => {
 
     const updateProfile = async (userId) => {
         try {
-            const fetched = await updateUserProfileService(userId,user,rdxUser.credentials.token)
+            const fetched = await updateUserProfileService(userId, user, rdxUser.credentials.token)
 
-            if(!fetched.success){
+            if (!fetched.success) {
                 console.log(fetched.message)
             }
 
             console.log(fetched.message)
 
             console.log(user);
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -77,47 +78,69 @@ export const UserProfileDetail = () => {
     return (
         <>
             <div className="d-flex row justify-content-center align-items-center  profileDetailDesign">
-            <div className="modal fade " id="editProfileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade " id="editProfileModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog ">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h3 className="modal-title fs-5" id="exampleModalLabel">Editar perfil de usuario</h3>
-                                <button type="button"  className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <label>Nombre</label>
-                                <CustomInput
-                                    type="text"
-                                    name="name"
-                                    placeholder={"Nombre"}
-                                    
-                                    value={user.name || ""}
-                                    changeEmit={inputHandler}
-                                // onBlurFunction={(e) => checkError(e)}
-                                />
-                                <label>Biografía</label>
-                                <CustomInput
-                                    type="text"
-                                    name="biography"
-                                    placeholder={"Tu biografía"}
-                                
-                                    value={user.biography || ""}
-                                    changeEmit={inputHandler}
-                                // onBlurFunction={(e) => checkError(e)}
-                                />
+                                <div className="d-flex row justify-content-center align-items-center">
+                                    <label>Nombre</label>
+                                    <CustomInput
+                                        type="text"
+                                        name="name"
+                                        placeholder={"Nombre"}
+                                        design={"input-design"}
+                                        value={user.name || ""}
+                                        changeEmit={inputHandler}
+                                    // onBlurFunction={(e) => checkError(e)}
+                                    />
+                                    <label>Biografía</label>
+                                    <CustomInput
+                                        type="text"
+                                        name="biography"
+                                        placeholder={"Tu biografía"}
+                                        design={"input-design"}
+                                        value={user.biography || ""}
+                                        changeEmit={inputHandler}
+                                    // onBlurFunction={(e) => checkError(e)}
+                                    />
 
 
+                                </div>
                             </div>
                             <div className="modal-footer">
 
-                                <button type="button" onClick={()=>updateProfile(rdxUserDetail.user.id)}  className="btn buttonEditDesign " data-bs-dismiss="modal"><i class="bi bi-pencil-fill"></i></button>
+
+                                <CustomButton
+
+                                    icon={"bi bi-pencil-fill"}
+                                    design={"updateButtonDesign"}
+                                    onClick={() => updateProfile(rdxUserDetail.user.id)}
+
+                                    modal={"modal"}
+
+
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <img src={rdxUserDetail.user.url_profile_image} alt="dgdf" />
-                    <button className={rdxUser?.credentials?.profileDetail?.role_id ===2 ? ("") : ("d-none")} data-bs-toggle="modal" data-bs-target="#editProfileModal" onClick={() => AddInfoToForm(rdxUserDetail.user)} ><i className="bi bi-pencil-fill"></i></button>
+                    <img className="logoImg" src={rdxUserDetail.user.url_profile_image} alt="dgdf" />
+
+                    <CustomButton
+
+                        icon={"bi bi-pencil-fill"}
+                        design={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("updateButtonDesign") : ("d-none")}
+                        onClick={() => AddInfoToForm(rdxUserDetail.user)}
+                        modalTarget={"#editProfileModal"}
+                        modal={"modal"}
+
+
+                    />
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
 
@@ -148,7 +171,7 @@ export const UserProfileDetail = () => {
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
                     <label>Fecha de creación</label>
-                    <p>{rdxUserDetail.user.created_at}</p>
+                    <p>{new Date(rdxUserDetail.user.created_at).toDateString()}</p>
                 </div>
             </div>
 

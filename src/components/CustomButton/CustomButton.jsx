@@ -1,7 +1,7 @@
 import "./CustomButton.css"
-export const CustomButton = ({ onClick, design, title,icon }) => {
+export const CustomButton = ({ onClick, design, title,icon,modal,modalTarget }) => {
     return (
-        <button className={design} onClick={onClick}>
+        <button data-bs-dismiss={modal} data-bs-toggle={modal} data-bs-target={modalTarget} className={design} onClick={onClick}>
            <i className={icon}></i> {title}
         </button>
     )

@@ -18,48 +18,67 @@ export const Header = () => {
                 {rdxUser?.credentials?.token
 
                     ? (<>
-
                         <div className="d-flex col m-1 justify-content-center align-items-center ">
-                            <div className="d-flex row  justify-content-center align-items-center ">
+                            <div className="d-flex col-3 m-1 justify-content-center align-items-center ">
                                 <div className="d-flex row  justify-content-center align-items-center ">
+                                    <div className="d-flex row  justify-content-center align-items-center ">
 
-                                    <CustomLink
-                                        path={"/chats"}
-                                        icon={"bi bi-chat"}
-                                        title={"Chats"}
-                                    />
+                                        <CustomLink
+                                            path={"/chats"}
+                                            icon={"bi bi-chat"}
+                                            title={"Chats"}
+                                        />
 
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div className="d-flex col-3 m-1 justify-content-center align-items-center ">
+                                <div className="d-flex row  justify-content-center align-items-center ">
+                                    <div className="d-flex row  justify-content-center align-items-center ">
+
+                                        <CustomLink
+                                            path={"/users"}
+                                            icon={"bi bi-people-fill"}
+                                            title={"Usuarios"}
+                                        />
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div className="d-flex col-3 m-1 justify-content-center align-items-center ">
+
+                                <div className="d-flex row  justify-content-center align-items-center ">
+                                    <div className="d-flex row  justify-content-center align-items-center ">
+
+                                        <CustomLink
+                                            path={"/profile"}
+
+                                            title={<img src={rdxUser?.credentials?.profileDetail?.url_profile_image} width="40em" height="40em" alt="" />}
+                                            auxiliartitle={rdxUser?.credentials?.profileDetail?.name}
+                                        />
+
+
+
+                                    </div>
                                 </div>
                             </div>
 
-                        </div>
+                            <div onClick={() => dispatch(logout({ credentials: "" }))} className="d-flex col-3 m-1 justify-content-center align-items-center ">
 
+                                <CustomLink
+                                    icon={"bi bi-box-arrow-right"}
+                                    title={"LogOut"}
+                                    path={"/"}
 
+                                />
 
-                        <div className="d-flex col m-1 justify-content-center align-items-center ">
-
-
-
-                            <CustomLink
-                                path={"/profile"}
-
-                                title={<img src={rdxUser?.credentials?.profileDetail?.url_profile_image} width="40em" height="40em" alt="" />}
-                                auxiliartitle={rdxUser?.credentials?.profileDetail?.name}
-                            />
-
-                           
-
-                        </div>
-
-                        <div onClick={() => dispatch(logout({ credentials: "" }))} className="d-flex col m-1 justify-content-center align-items-center ">
-
-                            <CustomLink
-                                icon={"bi bi-box-arrow-right"}
-                                title={"LogOut"}
-                                path={"/"}
-                               
-                            />
-
+                            </div>
                         </div>
 
                     </>)
@@ -70,35 +89,36 @@ export const Header = () => {
                         <>
                             <div className="d-flex col m-1 justify-content-center align-items-center ">
 
-                               
+
 
                                 <CustomLink
-                                icon={"bi bi-house"}
-                                title={"Inicio"}
-                                path={"/"}
-                              
-                               
-                            />
+                                    icon={"bi bi-house"}
+                                    title={"Inicio"}
+                                    path={"/"}
+
+
+                                />
 
                             </div>
                             <div className="d-flex col m-1 justify-content-center align-items-center ">
-                            <CustomLink
-                                icon={"bi bi-door-open"}
-                                title={"Registrate"}
-                                path={"/register"}
-                              
-                               
-                            />
+                                <CustomLink
+                                    icon={"bi bi-door-open"}
+                                    title={"Registrate"}
+                                    path={"/register"}
+
+
+                                />
                             </div>
                             <div className="d-flex col m-1 justify-content-center align-items-center ">
-                            <CustomLink
-                                icon={"bi bi-person-circle"}
-                                title={"Inicia sesión"}
-                                path={"/login"}
-                              
-                               
-                            />
+                                <CustomLink
+                                    icon={"bi bi-person-circle"}
+                                    title={"Inicia sesión"}
+                                    path={"/login"}
+
+
+                                />
                             </div>
+
                         </>
 
                     )

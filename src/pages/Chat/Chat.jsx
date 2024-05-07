@@ -7,6 +7,7 @@ import { createChatService, deleteChatService, getUserChatsService, updateChatSe
 import { updateChatDetail } from "../../app/slices/chatDetailSlice";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { validation } from "../../utils/validations";
+import { CustomButton } from "../../components/CustomButton/CustomButton";
 
 
 
@@ -205,7 +206,16 @@ export const Chat = () => {
                             </div>
                             <div className="modal-footer">
 
-                                <button type="button" onClick={createChat} className="btn addButtonDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i></button>
+
+
+                                <CustomButton
+
+                                    icon={"bi bi-plus-square"}
+                                    design={"addButtonDesignModal"}
+                                    onClick={createChat}
+                                    modal={"modal"}
+
+                                />
                             </div>
                         </div>
                     </div>
@@ -235,7 +245,13 @@ export const Chat = () => {
                             </div>
                             <div className="modal-footer">
 
-                                <button type="button" onClick={() => updateChat(chatCredential.id)} className="btn editButtonDesign " data-bs-dismiss="modal"><i className="bi bi-plus-square"></i></button>
+
+                                <CustomButton
+                                    icon={"bi bi-pencil"}
+                                    design={"updateButtonDesign"}
+                                    onClick={() => updateChat(chatCredential.id)}
+                                    modal={"modal"}
+                                />
                             </div>
                         </div>
                     </div>
@@ -254,8 +270,25 @@ export const Chat = () => {
 
 
                                             <div onClick={() => manageChatDetail(chats)} className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-8 justify-content-start align-items-center") : ("d-flex col-12 justify-content-start align-items-center")}>{chats.name}</div>
-                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-2 justify-content-center align-items-center") : ("d-none")}><button onClick={() => deleteChat(chats.id)}><i className="bi bi-trash"></i></button></div>
-                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-2 justify-content-center align-items-center") : ("d-none")}><button data-bs-toggle="modal" data-bs-target="#updateChatModal" onClick={() => AddInfoToForm(chats)}><i className="bi bi-pencil"></i></button></div>
+                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-2 justify-content-center align-items-center") : ("d-none")}>
+
+                                                <CustomButton
+                                                    icon={"bi bi-trash"}
+                                                    design={"deleteButtonDesign"}
+                                                    onClick={() => deleteChat(chats.id)}
+                                                />
+                                            </div>
+                                            <div className={chats.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-2 justify-content-center align-items-center") : ("d-none")}>
+
+
+                                                <CustomButton
+                                                    modal={"modal"}
+                                                    modalTarget={"#updateChatModal"}
+                                                    icon={"bi bi-pencil"}
+                                                    design={"updateButtonDesign"}
+                                                    onClick={() => AddInfoToForm(chats)}
+                                                />
+                                            </div>
 
 
                                         </div>
@@ -272,8 +305,17 @@ export const Chat = () => {
 
 
 
-                <div className="d-flex row z-1 justify-content-center m-1 align-items-center  ">
-                    <button data-bs-toggle="modal" data-bs-target="#newChatModal" className="d-flex addButtonDesign  row z-1 justify-content-center   align-items-center "><i className="bi bi-plus-square"></i></button>
+                <div className="d-flex row z-1 justify-content-end  m-1 align-items-end  ">
+
+
+                    <CustomButton
+                        modal={"modal"}
+                        modalTarget={"#newChatModal"}
+                        icon={"bi bi-plus-square"}
+                        design={"addButtonDesign"}
+
+                    />
+
                 </div>
 
 

@@ -1,0 +1,38 @@
+.formButtonDesign{
+    background-color:  #3FE05C;
+    color: white;
+}
+
+.deleteButtonDesign{
+    background-color:rgba(0, 0, 0, 0);
+    color: red;
+    
+}
+.updateButtonDesign{
+    background-color:rgba(0, 0, 0, 0);
+    color: rgb(178, 180, 15);
+    
+}
+.appChatButtonDesign{
+    background-color:rgba(0, 0, 0, 0);
+    color:  #3FE05C;
+    
+}
+
+.addButtonDesign{
+    width: 3em;
+     border-radius: 100%;
+     background-color: #3FE05C;
+     color: white;
+     position: relative;
+     margin-top: 10em;
+      
+  }
+.addButtonDesignModal{
+    width: 3em;
+     border-radius: 100%;
+     background-color: #3FE05C;
+     color: white;
+
+      
+  }

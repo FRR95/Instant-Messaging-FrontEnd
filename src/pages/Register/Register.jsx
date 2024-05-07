@@ -132,7 +132,7 @@ export const Register = () => {
                 <div className="error">{userError.passwordError}</div>
 
                 <CustomButton
-                    design={""}
+                    design={"formButtonDesign"}
                     title={"Register"}
                     onClick={signInMe}
                 />

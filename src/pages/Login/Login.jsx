@@ -134,7 +134,7 @@ export const Login = () => {
         />
         <div className="error">{credencialesError.passwordError}</div>
         <CustomButton
-          design={""}
+          design={"formButtonDesign"}
           title={"Login"}
           onClick={loginMe}
         />

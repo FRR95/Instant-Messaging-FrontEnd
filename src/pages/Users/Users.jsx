@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { deleteUserService, getUsersService } from "../../services/userApiCalls";
 import { updateUserDetail } from "../../app/slices/userDetailSlice";
+import { CustomButton } from "../../components/CustomButton/CustomButton";
 
 export const Users = () => {
     const rdxUser = useSelector(userData);
@@ -45,10 +46,10 @@ export const Users = () => {
 
     }, [users])
 
-    const deleteUser = async(userId) =>{
+    const deleteUser = async (userId) => {
 
         try {
-            const fetched = await deleteUserService (userId,rdxUser.credentials.token)
+            const fetched = await deleteUserService(userId, rdxUser.credentials.token)
 
             if (!fetched.success) {
                 console.log(fetched.message)
@@ -58,7 +59,7 @@ export const Users = () => {
 
             GetUsers()
 
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -93,22 +94,35 @@ export const Users = () => {
                                         <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-6 justify-content-center align-items-center")}>
                                             <div className="d-flex row justify-content-center align-items-center">
                                                 <div className="d-flex row-6 justify-content-center align-items-center">
-                                                {user.name}
+                                                    {user.name}
                                                 </div>
                                                 <div className="d-flex row-6 justify-content-center align-items-center">
-                                                {user.nickname}
+                                                    {user.nickname}
                                                 </div>
                                             </div>
                                         </div>
                                         <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
-                                            <button onClick={()=>deleteUser(user.id)}><i class="bi bi-trash"></i></button>
+                                            
+
+                                            <CustomButton
+
+                                                icon={"bi bi-trash"}
+                                                design={"deleteButtonDesign"}
+                                                onClick={() => deleteUser(user.id)}
+
+                                                
+
+
+                                            />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </>)
                     })}</>)
-                    : ("Cargando usuarios")}
+                    : (<div className="spinner-grow fs-5" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>)}
             </div>
         </>
     )

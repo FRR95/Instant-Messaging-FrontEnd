@@ -5,6 +5,7 @@ import { GetProfile, updateProfileService } from "../../services/userApiCalls";
 import { useNavigate } from "react-router-dom";
 import { userData } from "../../app/slices/userSlice";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
+import { CustomButton } from "../../components/CustomButton/CustomButton";
 
 
 
@@ -126,14 +127,35 @@ export const Profile = () => {
                             </div>
                             <div className="modal-footer">
 
-                                <button type="button" onClick={updateProfile} className="btn editButtonDesign " data-bs-dismiss="modal"><i class="bi bi-pencil-fill"></i></button>
+                                
+
+                                <CustomButton
+
+                                    icon={"bi bi-pencil-fill"}
+                                    design={"updateButtonDesign"}
+                                    onClick={updateProfile}
+                                    
+                                    modal={"modal"}
+
+
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
                     <img className="logoImg" src={user.url_profile_image} alt="dgdf" />
-                    <button className="editButtonDesign" data-bs-toggle="modal" data-bs-target="#editProfileModal" onClick={() => AddInfoToForm(user)} ><i className="bi bi-pencil-fill"></i></button>
+
+                    <CustomButton
+
+                        icon={"bi bi-pencil"}
+                        design={"updateButtonDesign"}
+                        onClick={() => AddInfoToForm(user)}
+                        modalTarget={"#editProfileModal"}
+                        modal={"modal"}
+
+
+                    />
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
 
@@ -164,7 +186,8 @@ export const Profile = () => {
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
                     <label>Fecha de creación</label>
-                    <p>{user.created_at}</p>
+
+                    {new Date(user.created_at).toDateString()}
                 </div>
             </div>
         </>
