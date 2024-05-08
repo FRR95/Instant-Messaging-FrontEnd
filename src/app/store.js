@@ -7,6 +7,7 @@ import storage from "redux-persist/lib/storage";
 import userSlice from "./slices/userSlice";
 import chatDetailSlice from "./slices/chatDetailSlice";
 import userDetailSlice from "./slices/userDetailSlice";
+import searchUserSlice from "./slices/searchUserSlice";
 
 
 
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   user: userSlice,
   chatDetail:chatDetailSlice,
   userDetail:userDetailSlice,
+  searchUser:searchUserSlice
 });
 
 const persistConfig = {
