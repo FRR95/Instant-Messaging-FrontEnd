@@ -109,7 +109,7 @@ export const Login = () => {
   };
   return (
     <>
-      <div className="d-flex justify-content-center flex-column align-items-center loginDesign">
+      <div className="d-flex flex-column justify-content-center  align-items-center loginDesign">
 
         <h3 className="fs-5">INICIA SESIÓN</h3>
 

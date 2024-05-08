@@ -16,6 +16,8 @@ export const Chat = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
+    
+
     const [loading, setLoadingSpinner] = useState(false);
 
     const [chat, setChat] = useState([]);
@@ -48,7 +50,6 @@ export const Chat = () => {
 
     const getUserChats = async () => {
         try {
-
             setLoadingSpinner(true)
 
             const fetched = await getUserChatsService(rdxUser.credentials.token);
@@ -62,13 +63,11 @@ export const Chat = () => {
           
 
             setLoadingSpinner(false)
-
-
-
-
+            
         } catch (error) {
-          
+            
         }
+       
     };
 
     useEffect(() => {
@@ -78,9 +77,9 @@ export const Chat = () => {
     }, [rdxUser]);
 
     useEffect(() => {
-        if (chat.length === 0) {
-           getUserChats() 
-        }
+        if (chat.length ===0) {
+          getUserChats()
+        }     
     }, [chat])
 
     const manageChatDetail = (chats) => {
@@ -171,7 +170,7 @@ export const Chat = () => {
         <>
             <div className="d-flex row justify-content-center align-items-center  chatDesign">
 
-                <h3 className="mb-3 fs-5">Tus chats</h3>
+                <h1 className="my-3 fs-5">Tus chats</h1>
 
 
                 {loading && <div className="spinner-grow fs-5" role="status">
@@ -259,7 +258,7 @@ export const Chat = () => {
 
 
 
-                {chat.length > 0
+                {chat.length > 0  
                     ? (<>{chat.map(chats => {
                         return (
                             <>
@@ -305,14 +304,14 @@ export const Chat = () => {
 
 
 
-                <div className="d-flex row z-1 justify-content-end  m-1 align-items-end  ">
+                <div className="d-flex row   z-1 justify-content-end  m-1 align-items-end  ">
 
 
                     <CustomButton
                         modal={"modal"}
                         modalTarget={"#newChatModal"}
                         icon={"bi bi-plus-square"}
-                        design={"addButtonDesign"}
+                        design={"  addButtonDesign"}
 
                     />
 
