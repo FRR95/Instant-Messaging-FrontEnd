@@ -50,19 +50,19 @@ export const Chat = () => {
 
     const getUserChats = async () => {
         try {
-            setLoadingSpinner(true)
+            // setLoadingSpinner(true)
 
             const fetched = await getUserChatsService(rdxUser.credentials.token);
 
             if (!fetched.success) {
                
-                setLoadingSpinner(false)
+                // setLoadingSpinner(false)
             }
 
             setChat(fetched.data);
           
 
-            setLoadingSpinner(false)
+            // setLoadingSpinner(false)
             
         } catch (error) {
             
@@ -77,9 +77,13 @@ export const Chat = () => {
     }, [rdxUser]);
 
     useEffect(() => {
-        if (chat.length ===0) {
-          getUserChats()
-        }     
+      
+      
+      setTimeout(() => {
+        getUserChats()
+      }, 2000);  
+   
+        
     }, [chat])
 
     const manageChatDetail = (chats) => {

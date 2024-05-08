@@ -61,6 +61,34 @@ export const ChatDetail = () => {
     };
 
 
+    const bringMessages = async () => {
+
+        try {
+
+        
+
+            const fetched = await bringMessagesService(detailRdx?.chats?.id, rdxUser.credentials.token)
+
+            if (!fetched.success) {
+                
+             console.log(fetched.message)
+
+            }
+
+            setMessage(fetched.data);
+            
+
+        
+
+
+
+        } catch (error) {
+          
+           console.log(error)
+        }
+    }
+
+
     useEffect(() => {
         if (!rdxUser.credentials.token) {
             navigate("/")
@@ -93,40 +121,29 @@ export const ChatDetail = () => {
         }
     }
 
-    const bringMessages = async () => {
 
-        try {
-
-            setLoadingSpinner(true);
-
-            const fetched = await bringMessagesService(detailRdx?.chats?.id, rdxUser.credentials.token)
-
-            if (!fetched.success) {
-                
-              return  setLoadingSpinner(false);
-
-            }
-
-            setMessage(fetched.data);
-            
-
-            setLoadingSpinner(false);
-
-
-
-        } catch (error) {
-          
-            setLoadingSpinner(false);
-        }
-    }
 
     useEffect(() => {
         if (usersChat.length === 0) {
             getUsersChat()
             GetUsers()
-            bringMessages()
+           bringMessages()
+           
         }
     }, [usersChat]);
+
+    useEffect(() => {
+    
+        setTimeout(() => {
+            bringMessages()
+          }, 10000);  
+           
+        
+    }, [message]);
+
+ 
+
+     
 
 
   
