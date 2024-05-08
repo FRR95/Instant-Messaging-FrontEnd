@@ -3,12 +3,15 @@ import "./Users.css"
 import { userData } from "../../app/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { deleteUserService, getUsersService } from "../../services/userApiCalls";
+import { deleteUserService, getUsersService, searchUsersService } from "../../services/userApiCalls";
 import { updateUserDetail } from "../../app/slices/userDetailSlice";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
+import { CustomInput } from "../../components/CustomInput/CustomInput";
+import { searchUserData, updateUserCriteria } from "../../app/slices/searchUserSlice";
 
 export const Users = () => {
     const rdxUser = useSelector(userData);
+    const searchUserRdx = useSelector(searchUserData);
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [loading, setLoadingSpinner] = useState(false);
@@ -21,32 +24,70 @@ export const Users = () => {
     }, [rdxUser]);
 
 
+    const [criteria, setCriteria] = useState("");
+
+    const searchHandler = (e) => {
+        setCriteria(e.target.value);
+    
+    };
+
+    
+    useEffect(() => {
+        setLoadingSpinner(true)
+        const searching = setTimeout(() => {
+
+            dispatch(updateUserCriteria(criteria));
+            setLoadingSpinner(false)
+        }, 375);
+
+        return () => {
+            clearTimeout(searching);
+            setLoadingSpinner(false)
+        }
+    }, [criteria]);
+
+
+
 
     const GetUsers = async () => {
         try {
 
-            
-            const fetched = await getUsersService(rdxUser.credentials.token)
+            let fetched
+            if (searchUserRdx.criteriaUser !== "") {
 
-            if (!fetched.success) {
-             
+
+                fetched = await searchUsersService(rdxUser.credentials.token, searchUserRdx.criteriaUser);
+
+          
             }
 
+            else {
+
+                fetched = await getUsersService(rdxUser.credentials.token)
+
              
+
+
+            }
 
             setUser(fetched.data)
 
 
+
+
         } catch (error) {
-           
+            console.log(error)
         }
+
     }
+
+
 
     useEffect(() => {
 
-        users.length === 0 && (GetUsers())
+        GetUsers()
 
-    }, [users])
+    }, [searchUserRdx.criteriaUser])
 
     const deleteUser = async (userId) => {
 
@@ -56,7 +97,7 @@ export const Users = () => {
             const fetched = await deleteUserService(userId, rdxUser.credentials.token)
 
             if (!fetched.success) {
-              return  setLoadingSpinner(false)
+                return setLoadingSpinner(false)
             }
 
             setLoadingSpinner(false)
@@ -65,7 +106,7 @@ export const Users = () => {
 
 
         } catch (error) {
-          return  setLoadingSpinner(false)
+            return setLoadingSpinner(false)
         }
     }
 
@@ -85,22 +126,33 @@ export const Users = () => {
         <>
             <div className="d-flex row justify-content-center align-items-center  usersSectionDesign">
 
-            {loading && <div className="spinner-grow fs-5" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>}
+                <h3 className="fs-5 mb-2">Usuarios</h3>
+
+                <CustomInput
+                    placeholder={"Buscar usuarios por nickname"}
+                    type={"text"}
+                    name={"nickname"}
+                    design={"input-design"}
+                    value={criteria || ""}
+                    changeEmit={searchHandler}
+                />
+
+                {loading && <div className="spinner-grow fs-5" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>}
 
 
                 {users.length > 0
                     ? (<>{users.map(user => {
                         return (<>
                             <div className="d-flex row  justify-content-center align-items-center usersCardSectionDesign ">
-                                <div className="d-flex row mb-2 justify-content-center align-items-center userCardDesign"  >
+                                <div className="d-flex row  mb-2 justify-content-center align-items-center userCardDesign"  >
                                     <div className="d-flex col justify-content-center align-items-center">
-                                        <div onClick={() => manageUserDetail(user)} className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-start align-items-center") : ("d-flex col-6 justify-content-start align-items-center")}>
+                                        <div onClick={() => manageUserDetail(user)} className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center align-items-center") : ("d-flex col-1 justify-content-start align-items-center")}>
                                             <img src={user.url_profile_image} width="40em" height="40em" alt="" />
                                         </div>
-                                        <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-start  align-items-center") : ("d-flex col-6 justify-content-start  align-items-center")}>
-                                            <div className="d-flex row justify-content-center align-items-center">
+                                        <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center  align-items-center") : ("d-flex col-11 justify-content-start  align-items-center")}>
+                                            <div className="d-flex row justify-content-start align-items-center">
                                                 <div onClick={() => manageUserDetail(user)} className="d-flex row-6 justify-content-center align-items-center">
                                                     {user.name}
                                                 </div>
@@ -110,7 +162,7 @@ export const Users = () => {
                                             </div>
                                         </div>
                                         <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
-                                            
+
 
                                             <CustomButton
 
@@ -118,7 +170,7 @@ export const Users = () => {
                                                 design={"deleteButtonDesign"}
                                                 onClick={() => deleteUser(user.id)}
 
-                                                
+
 
 
                                             />
@@ -129,8 +181,8 @@ export const Users = () => {
                         </>)
                     })}</>)
                     : (<div className="spinner-grow fs-5" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </div>)}
+                        <span className="visually-hidden">Loading...</span>
+                    </div>)}
             </div>
         </>
     )
