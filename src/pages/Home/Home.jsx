@@ -29,6 +29,7 @@ export const Home = () => {
 
                         <CustomLink
                             path={"/register"}
+                            className = {`clink-design`}
 
                             title={"Inicia esta aventura!"}
                         />

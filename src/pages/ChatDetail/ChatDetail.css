@@ -1,14 +1,16 @@
 .ChatDetailSectionDesign{
     margin: 0;
     padding: 0;
-    background-color: rgb(254, 254, 254);
+    background-color:#abe2b5a8;
     min-height: 42em;
 }
 
 .textAreaDesign{
     height: 3em;
+    width: 90%;
     border-radius: 1em;
     resize: none;
+    padding-inline: 0.5em;
 }
 
 .ownMessageCardDesign{
@@ -16,8 +18,9 @@
     border-top-left-radius: 1em;
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
-    border: solid 1px rgb(177, 177, 177);
+    border: solid 1px green;
     width: 15em;
+    margin-right: 0.1em;
 }
 .notOwnMessageCardDesign{
     background-color: rgb(177, 177, 177);
@@ -25,7 +28,7 @@
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
    
-    border: solid 1px rgb(177, 177, 177);
+    border: solid 1px rgb(104, 104, 104);
     width: 15em;
 }
 
@@ -41,4 +44,14 @@
 .messagesSection{
     padding-top: 5em;
     padding-bottom: 5em;
+
+    
+  
+  
+    
+}
+
+.buttonSendDesign{
+    border-radius: 1em;
+    border: 0.1px solid black ;
 }

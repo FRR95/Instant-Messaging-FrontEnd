@@ -1,12 +1,17 @@
 import "./CustomLink.css"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
-export const CustomLink = ({path,auxiliartitle, title,icon}) => {
+export const CustomLink = ({path,auxiliartitle, title,icon,className}) => {
 
     const navigate = useNavigate()
+    const location = useLocation()
+   
 
     return (
-        <div className="clink-design" onClick={()=>navigate(path)}>
+        <div 
+        
+        className={className}
+        onClick={()=>navigate(path)}>
             <div className="d-flex row justify-content-center align-items-center"></div>
             <i className={icon}></i>
             <p>{title}</p>

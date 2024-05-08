@@ -108,7 +108,7 @@ export const ChatDetail = () => {
             }
 
             setMessage(fetched.data);
-           
+            
 
             setLoadingSpinner(false);
 
@@ -127,6 +127,8 @@ export const ChatDetail = () => {
             bringMessages()
         }
     }, [usersChat]);
+
+
   
 
     const createMessage = async (chatId) => {
@@ -468,7 +470,7 @@ export const ChatDetail = () => {
                                                         <div className="d-flex col-4 justify-content-start align-items-center">
                                                             {rdxUser?.credentials?.profileDetail?.id === messages.user_id ? (rdxUser?.credentials?.profileDetail?.name) : (messages.user.name)}
                                                         </div>
-                                                        <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex col  justify-content-end align-items-center") : ("d-none")}>
+                                                        <div className={rdxUser?.credentials?.profileDetail?.id === messages.user_id ? ("d-flex col   justify-content-end align-items-center") : ("d-none")}>
                                                             <div className="d-flex col-4 justify-content-end align-items-center">
 
 
@@ -513,7 +515,7 @@ export const ChatDetail = () => {
 
                     </div>
                 </div>
-                <div className="d-flex row-1  fixed-bottom  justify-content-center align-items-center">
+                <div className="d-flex row-1 mb-2  fixed-bottom  justify-content-center align-items-center">
                     <div className="d-flex col  justify-content-center align-items-center">
                         <div className="d-flex col-11 justify-content-start align-items-center">
                             <textarea
@@ -528,7 +530,7 @@ export const ChatDetail = () => {
                             </textarea>
                         </div>
                         <div className="d-flex col-1 justify-content-end align-items-center">
-                            <button onClick={() => createMessage(detailRdx?.chats?.id)}><i className="bi bi-send-fill"></i></button>
+                            <button className="buttonSendDesign" onClick={() => createMessage(detailRdx?.chats?.id)}><i className="bi bi-send-fill"></i></button>
                         </div>
                     </div>
                 </div>

@@ -154,7 +154,7 @@ export const Register = () => {
 
 
 
-                <p>¿Ya tienes cuenta? <CustomLink path={"/login"} title={"Inicia sesión"} /></p>
+                <p>¿Ya tienes cuenta? <CustomLink path={"/login"} className = {`clink-design`} title={"Inicia sesión"} /></p>
 
 
          

@@ -150,7 +150,7 @@ export const Login = () => {
         <div className="fs-5">{msgSuccess}</div>
 
 
-        <p>¿Aun no tienes cuenta? </p> <CustomLink path={"/register"} title={"Regístrate"} />
+        <p>¿Aun no tienes cuenta? </p> <CustomLink className = {`clink-design`} path={"/register"} title={"Regístrate"} />
 
 
 

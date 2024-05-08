@@ -263,7 +263,7 @@ export const Chat = () => {
                         return (
                             <>
 
-                                <div className="d-flex row  justify-content-center align-items-center chatCardSectionDesign ">
+                                <div key={chats.id} className="d-flex row  justify-content-center align-items-center chatCardSectionDesign ">
                                     <div className="d-flex row justify-content-center align-items-center chatCardDesign" >
                                         <div className="d-flex col justify-content-center align-items-center" >
 
