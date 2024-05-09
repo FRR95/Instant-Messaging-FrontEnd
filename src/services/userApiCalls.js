@@ -118,17 +118,19 @@ export const searchUsersService = async (token,nickname) => {
         return error;
     }
 };
-export const deleteUserService = async (userId,token) => {
+export const deleteUserService = async (user,token) => {
     const options = {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify(user),
+
       };
 
     try {
-        const response = await fetch(`${root}users/${userId}`, options);
+        const response = await fetch(`${root}users`, options);
 
         const data = await response.json();
 

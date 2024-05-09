@@ -17,6 +17,66 @@ export const Users = () => {
     const [loading, setLoadingSpinner] = useState(false);
     const [users, setUser] = useState([]);
 
+
+    const [checkButtonUser, setCheckButtonUser] = useState(false)
+
+
+
+
+
+
+    let arrayToDeleteUser = []
+
+
+
+    const handleCheckUser = (id) => {
+        setCheckButtonUser(!checkButtonUser)
+
+        const isInArrayUser = arrayToDeleteUser.includes(id)
+        if (isInArrayUser) {
+            const index = arrayToDeleteUser.indexOf(id)
+            arrayToDeleteUser.splice(index, 1)
+        } else {
+            arrayToDeleteUser.push(id)
+        }
+        setCheckButtonUser(false)
+        // setUsersToDelete({ usersId: arrayToDelete })
+    }
+
+    const usersToRemove = { checkbox: arrayToDeleteUser }
+
+    const deleteMoreTanOneUser = async (userId) => {
+
+        try {
+
+
+
+            setLoadingSpinner(true)
+            const fetched = await deleteUserService(usersToRemove, rdxUser.credentials.token)
+
+            if (!fetched.success) {
+
+                console.log(fetched.message)
+
+                return setLoadingSpinner(false)
+            }
+
+            setLoadingSpinner(false)
+
+
+            GetUsers()
+
+
+        } catch (error) {
+
+            return setLoadingSpinner(false)
+        }
+    }
+
+
+
+
+
     useEffect(() => {
 
         !rdxUser?.credentials?.token && (navigate("/"))
@@ -28,10 +88,10 @@ export const Users = () => {
 
     const searchHandler = (e) => {
         setCriteria(e.target.value);
-    
+
     };
 
-    
+
     useEffect(() => {
         setLoadingSpinner(true)
         const searching = setTimeout(() => {
@@ -58,14 +118,14 @@ export const Users = () => {
 
                 fetched = await searchUsersService(rdxUser.credentials.token, searchUserRdx.criteriaUser);
 
-          
+
             }
 
             else {
 
                 fetched = await getUsersService(rdxUser.credentials.token)
 
-             
+
 
 
             }
@@ -89,26 +149,10 @@ export const Users = () => {
 
     }, [searchUserRdx.criteriaUser])
 
-    const deleteUser = async (userId) => {
-
-        try {
-
-            setLoadingSpinner(true)
-            const fetched = await deleteUserService(userId, rdxUser.credentials.token)
-
-            if (!fetched.success) {
-                return setLoadingSpinner(false)
-            }
-
-            setLoadingSpinner(false)
-
-            GetUsers()
 
 
-        } catch (error) {
-            return setLoadingSpinner(false)
-        }
-    }
+
+
 
 
     const manageUserDetail = (user) => {
@@ -142,6 +186,27 @@ export const Users = () => {
                 </div>}
 
 
+                <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col justify-content-center align-items-center") : ("d-none")}>
+
+
+
+                    <div className={"d-flex col-10 justify-content-center align-items-center"}>
+                    </div>
+                    <div className={"d-flex col-2 justify-content-center align-items-center"}>
+
+
+                        <CustomButton
+
+                            icon={"bi bi-trash"}
+                            design={"deleteButtonDesign"}
+                            onClick={() => deleteMoreTanOneUser(arrayToDeleteUser)}
+                        />
+
+
+
+
+                    </div>
+                </div>
                 {users.length > 0
                     ? (<>{users.map(user => {
                         return (<>
@@ -164,16 +229,22 @@ export const Users = () => {
                                         <div className={rdxUser?.credentials?.profileDetail?.role_id === 2 ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
 
 
-                                            <CustomButton
-
-                                                icon={"bi bi-trash"}
-                                                design={"deleteButtonDesign"}
-                                                onClick={() => deleteUser(user.id)}
 
 
 
 
+                                            <CustomInput
+                                                placeholder={"Buscar usuarios por nickname"}
+                                                type={"checkbox"}
+                                                name={"checkbox"}
+                                                design={user.role_id === 2 ? ("d-none") : ("switch")}
+                                                value={checkButtonUser.state}
+                                                changeEmit={() => handleCheckUser(user.id)}
                                             />
+
+
+
+
                                         </div>
                                     </div>
                                 </div>
