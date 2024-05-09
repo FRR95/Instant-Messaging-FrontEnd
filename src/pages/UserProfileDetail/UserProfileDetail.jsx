@@ -7,6 +7,8 @@ import { userDetailData } from "../../app/slices/userDetailSlice";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { updateUserProfileService } from "../../services/userApiCalls";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const UserProfileDetail = () => {
 
@@ -65,15 +67,21 @@ export const UserProfileDetail = () => {
             const fetched = await updateUserProfileService(userId, user, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                return setLoadingSpinner(false)
+                setLoadingSpinner(false)
+                
+                return toast.error(fetched.message)
+
+
             }
 
 
 
             setLoadingSpinner(false)
+            toast.success(fetched.message)
 
         } catch (error) {
             setLoadingSpinner(false)
+            return toast.error(error)
         }
     }
 
@@ -180,6 +188,19 @@ export const UserProfileDetail = () => {
                     <label>Fecha de creación</label>
                     <p>{new Date(rdxUserDetail.user.created_at).toDateString()}</p>
                 </div>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1300}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+
+                    theme="light"
+
+                />
             </div>
 
         </>

@@ -8,6 +8,8 @@ import { updateUserDetail } from "../../app/slices/userDetailSlice";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { searchUserData, updateUserCriteria } from "../../app/slices/searchUserSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Users = () => {
     const rdxUser = useSelector(userData);
@@ -56,12 +58,13 @@ export const Users = () => {
 
             if (!fetched.success) {
 
-                console.log(fetched.message)
+                setLoadingSpinner(false)
+                return toast.error(fetched.message)
 
-                return setLoadingSpinner(false)
             }
 
             setLoadingSpinner(false)
+            toast.success(fetched.message)
 
 
             GetUsers()
@@ -69,7 +72,8 @@ export const Users = () => {
 
         } catch (error) {
 
-            return setLoadingSpinner(false)
+            setLoadingSpinner(false)
+            return toast.error(error) 
         }
     }
 
@@ -136,7 +140,7 @@ export const Users = () => {
 
 
         } catch (error) {
-            console.log(error)
+            return toast.error(error) 
         }
 
     }
@@ -254,6 +258,20 @@ export const Users = () => {
                     : (<div className="spinner-grow fs-5" role="status">
                         <span className="visually-hidden">Loading...</span>
                     </div>)}
+
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1300}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+
+                    theme="light"
+
+                />
             </div>
         </>
     )

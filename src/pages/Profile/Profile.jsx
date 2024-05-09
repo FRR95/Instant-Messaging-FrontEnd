@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { userData } from "../../app/slices/userSlice";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -72,13 +74,16 @@ export const Profile = () => {
             const fetched = await updateProfileService(user, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                return setLoadingSpinner(false)
+                setLoadingSpinner(false)
+                return toast.error(fetched.message)
             }
 
             setLoadingSpinner(false)
+            toast.success(fetched.message)
 
         } catch (error) {
-            return setLoadingSpinner(false)
+            setLoadingSpinner(false)
+            toast.error(fetched.message)
         }
     }
 
@@ -198,6 +203,20 @@ export const Profile = () => {
 
                     {new Date(user.created_at).toDateString()}
                 </div>
+
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1300}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+
+                    theme="light"
+
+                />
             </div>
         </>
     )

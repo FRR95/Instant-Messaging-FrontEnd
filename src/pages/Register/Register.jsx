@@ -6,6 +6,8 @@ import { registerService } from "../../services/authApiCalls"
 import { validation } from "../../utils/validations"
 import { CustomLink } from "../../components/CustomLink/CustomLink"
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Register = () => {
@@ -13,11 +15,9 @@ export const Register = () => {
     const Navigate = useNavigate()
     const [loading, setLoadingSpinner] = useState(false);
 
-    const [msgError, setMsgError] = useState("");
 
-    const [msgSuccess, setMsgSuccess] = useState("");
 
-    
+
     const [userCredentials, setUser] = useState({
         name: "",
         nickname: "",
@@ -59,7 +59,7 @@ export const Register = () => {
             for (let elemento in userCredentials) {
                 if (userCredentials[elemento] === "") {
 
-                    return setMsgError("No has rellenado todos los campos")
+                    return toast.error("No has rellenado todos los campos")
                 }
             }
             setLoadingSpinner(true)
@@ -68,9 +68,9 @@ export const Register = () => {
             if (!fetched.success) {
 
                 setLoadingSpinner(false)
-                return setMsgError(`${fetched.message}`)
+                return toast.error(`${fetched.message}`)
             }
-             setMsgSuccess(`${fetched.message}`)
+            toast.success(`${fetched.message}`)
 
             setLoadingSpinner(false)
 
@@ -80,7 +80,7 @@ export const Register = () => {
 
         } catch (error) {
             setLoadingSpinner(false)
-            return setMsgError(`${error}`)
+            return toast.error(`${error}`)
         }
 
     }
@@ -149,15 +149,26 @@ export const Register = () => {
                     <span className="visually-hidden">Loading...</span>
                 </div>}
 
-            <div className="error">{msgError}</div>
-            <div className="fs-5">{msgSuccess}</div>
+          
 
 
 
-                <p>¿Ya tienes cuenta? <CustomLink path={"/login"} className = {`clink-design`} title={"Inicia sesión"} /></p>
+                <p>¿Ya tienes cuenta? <CustomLink path={"/login"} className={`clink-design`} title={"Inicia sesión"} /></p>
 
 
-         
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1300}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+
+                    theme="light"
+
+                />
 
 
             </div>

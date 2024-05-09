@@ -9,6 +9,8 @@ import { useState } from "react";
 import { GetProfile } from "../../services/userApiCalls.js";
 import { CustomLink } from "../../components/CustomLink/CustomLink.jsx";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Login = () => {
@@ -21,9 +23,7 @@ export const Login = () => {
   });
   const [loading, setLoadingSpinner] = useState(false);
 
-  const [msgError, setMsgError] = useState("");
 
-  const [msgSuccess, setMsgSuccess] = useState("");
 
   const inputHandler = (e) => {
     setUser((prevState) => ({
@@ -58,7 +58,7 @@ export const Login = () => {
 
         if (user[elemento] === "") {
           setLoadingSpinner(false)
-          return setMsgError(`Todos los campos tienen que estar rellenos`)
+          return toast.error(`Todos los campos tienen que estar rellenos`)
 
 
         }
@@ -71,9 +71,8 @@ export const Login = () => {
       const fetchedUser = await GetProfile(fetched.token);
 
       if (!fetched.success) {
-
         setLoadingSpinner(false)
-        return setMsgError(`${fetched.message}`)
+        return toast.error(`${fetched.message}`)
       }
 
       if (fetched.token) {
@@ -91,7 +90,11 @@ export const Login = () => {
 
       }
 
-      setMsgSuccess(`${fetched.message}`)
+
+
+      toast.success(`${fetched.message}`)
+
+
 
       setLoadingSpinner(false)
 
@@ -103,7 +106,7 @@ export const Login = () => {
     }
     catch (error) {
       setLoadingSpinner(false)
-      return setMsgError(`${error}`)
+
     }
 
   };
@@ -146,15 +149,29 @@ export const Login = () => {
           <span className="visually-hidden">Loading...</span>
         </div>}
 
-        <div className="error">{msgError}</div>
-        <div className="fs-5">{msgSuccess}</div>
+    
 
 
-        <p>¿Aun no tienes cuenta? </p> <CustomLink className = {`clink-design`} path={"/register"} title={"Regístrate"} />
+        <p>¿Aun no tienes cuenta? </p> <CustomLink className={`clink-design`} path={"/register"} title={"Regístrate"} />
 
 
+        <ToastContainer
+          position="top-right"
+          autoClose={1300}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          
+          theme="light"
+
+        />
 
       </div>
+
+
 
 
     </>

@@ -8,6 +8,8 @@ import { updateChatDetail } from "../../app/slices/chatDetailSlice";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { validation } from "../../utils/validations";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -16,7 +18,8 @@ export const Chat = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
-    
+
+
 
     const [loading, setLoadingSpinner] = useState(false);
 
@@ -55,19 +58,19 @@ export const Chat = () => {
             const fetched = await getUserChatsService(rdxUser.credentials.token);
 
             if (!fetched.success) {
-               
+
                 // setLoadingSpinner(false)
             }
 
             setChat(fetched.data);
-          
+
 
             // setLoadingSpinner(false)
-            
+
         } catch (error) {
-            
+
         }
-       
+
     };
 
     useEffect(() => {
@@ -77,13 +80,13 @@ export const Chat = () => {
     }, [rdxUser]);
 
     useEffect(() => {
-      
-      
-      setTimeout(() => {
-        getUserChats()
-      }, 2000);  
-   
-        
+
+
+        setTimeout(() => {
+            getUserChats()
+        }, 2000);
+
+
     }, [chat])
 
     const manageChatDetail = (chats) => {
@@ -102,15 +105,16 @@ export const Chat = () => {
             const fetched = await createChatService(chatCredential, rdxUser?.credentials?.token)
 
             if (!fetched.success) {
-               
+
                 setLoadingSpinner(false)
+                return toast.error(fetched.message)
             }
-            
+            toast.success(fetched.message)
             setLoadingSpinner(false)
             getUserChats()
         } catch (error) {
-          
 
+            return toast.error(error)
         }
     }
 
@@ -119,15 +123,16 @@ export const Chat = () => {
             setLoadingSpinner(true)
             const fetched = await deleteChatService(chatId, rdxUser?.credentials?.token)
             if (!fetched.success) {
-                
                 setLoadingSpinner(false)
+                return toast.error(fetched.message)
             }
-           
+
             setLoadingSpinner(false)
+            toast.success(fetched.message)
             getUserChats()
 
         } catch (error) {
-           
+            return toast.error(error)
         }
     }
 
@@ -147,13 +152,15 @@ export const Chat = () => {
 
         const fetched = await updateChatService(chatId, chatCredential, rdxUser.credentials.token)
         if (!fetched.success) {
-            
+
             setLoadingSpinner(false)
+            return toast.error(fetched.message)
         }
 
-      
+
         setLoadingSpinner(false)
         getUserChats()
+        toast.success(fetched.message)
 
         clearForm()
     }
@@ -180,6 +187,8 @@ export const Chat = () => {
                 {loading && <div className="spinner-grow fs-5" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>}
+
+
 
 
 
@@ -262,7 +271,7 @@ export const Chat = () => {
 
 
 
-                {chat.length > 0  
+                {chat.length > 0
                     ? (<>{chat.map(chats => {
                         return (
                             <>
@@ -321,7 +330,19 @@ export const Chat = () => {
 
                 </div>
 
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1300}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
 
+                    theme="light"
+
+                />
 
             </div>
         </>

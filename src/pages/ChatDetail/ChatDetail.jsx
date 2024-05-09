@@ -11,6 +11,8 @@ import { addUserToChatService, getUsersFromChatService, leaveChatService, remove
 import { getUsersService } from "../../services/userApiCalls";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
 import { updateUserDetail } from "../../app/slices/userDetailSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -38,17 +40,17 @@ export const ChatDetail = () => {
             const fetched = await getUsersService(rdxUser.credentials.token)
 
             if (!fetched.success) {
-                
+
                 setLoadingSpinner(false)
             }
 
-           
+
             setUser(fetched.data)
             setLoadingSpinner(false)
 
 
         } catch (error) {
-           
+
             setLoadingSpinner(false)
         }
     }
@@ -65,26 +67,26 @@ export const ChatDetail = () => {
 
         try {
 
-        
+
 
             const fetched = await bringMessagesService(detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                
-             console.log(fetched.message)
+
+                console.log(fetched.message)
 
             }
 
             setMessage(fetched.data);
-            
 
-        
+
+
 
 
 
         } catch (error) {
-          
-           console.log(error)
+
+            console.log(error)
         }
     }
 
@@ -127,26 +129,26 @@ export const ChatDetail = () => {
         if (usersChat.length === 0) {
             getUsersChat()
             GetUsers()
-           bringMessages()
-           
+            bringMessages()
+
         }
     }, [usersChat]);
 
     useEffect(() => {
-    
+
         setTimeout(() => {
             bringMessages()
-          }, 10000);  
-           
-        
+        }, 10000);
+
+
     }, [message]);
 
- 
-
-     
 
 
-  
+
+
+
+
 
     const createMessage = async (chatId) => {
 
@@ -167,7 +169,7 @@ export const ChatDetail = () => {
             })
 
         } catch (error) {
-          
+
         }
     }
     const clearForm = async () => {
@@ -184,26 +186,30 @@ export const ChatDetail = () => {
             setLoadingSpinner(true)
             const fetched = await deleteMessageService(messageId, detailRdx?.chats?.id, rdxUser.credentials.token)
             if (!fetched.success) {
-              return  setLoadingSpinner(false)
+                setLoadingSpinner(false)
+                return toast.error(fetched.message)
             }
-             setLoadingSpinner(false)
+            setLoadingSpinner(false)
+
+            toast.success(fetched.message)
 
             bringMessages()
 
 
         } catch (error) {
-          return  setLoadingSpinner(false)
+            return toast.error(error)
         }
     }
     const updateMessage = async (messageId) => {
 
-          setLoadingSpinner(true)
+        setLoadingSpinner(true)
         const fetched = await updateMessageService(messageId, messageCredential, detailRdx?.chats?.id, rdxUser.credentials.token)
         if (!fetched.success) {
-            return  setLoadingSpinner(false)
+            setLoadingSpinner(false)
+            return toast.error(fetched.message)
         }
+        toast.success(fetched.message)
 
-       
         bringMessages()
 
         clearForm()
@@ -224,18 +230,20 @@ export const ChatDetail = () => {
             const fetched = await removeUserToChatService(userId, detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                
-               return setLoadingSpinner(false)
+
+                setLoadingSpinner(false)
+                return toast.error(fetched.message)
             }
 
-           
 
+            toast.success(fetched.message)
             setLoadingSpinner(false)
 
             getUsersChat()
 
         } catch (error) {
-            return setLoadingSpinner(false)
+            setLoadingSpinner(false)
+            return toast.error(error)
         }
     }
     const addUserToChat = async (userId) => {
@@ -245,18 +253,21 @@ export const ChatDetail = () => {
             const fetched = await addUserToChatService(userId, detailRdx?.chats?.id, rdxUser.credentials.token)
 
             if (!fetched.success) {
-                
-                return setLoadingSpinner(false)
+
+                setLoadingSpinner(false)
+                return toast.error(fetched.message)
             }
 
-            
+
 
             setLoadingSpinner(false)
+            toast.success(fetched.message)
 
             getUsersChat()
 
         } catch (error) {
-            return setLoadingSpinner(false)
+            setLoadingSpinner(false)
+            return toast.error(error)
         }
     }
     const leaveChat = async () => {
@@ -264,12 +275,12 @@ export const ChatDetail = () => {
             const fetched = await leaveChatService(detailRdx?.chats?.id, rdxUser.credentials.token)
 
 
-          
+
 
             navigate("/chats");
 
         } catch (error) {
-          
+
         }
     }
     const goToChatPage = async () => {
@@ -368,15 +379,15 @@ export const ChatDetail = () => {
                                 <div className="modal-header">
 
                                     <div className="d-flex row justify-content-center align-items-center">
-                                    <div className="d-flex row-6 justify-content-center align-items-center">
-                                    
-                                    <h3 className="modal-title fs-5" id="exampleModalLabel">{detailRdx?.chats?.name}</h3>
-                                    </div>
-                                    <div className="d-flex row-6 justify-content-center align-items-center">
-                                    
-                                    <p>Creado el {new Date(detailRdx?.chats?.created_at).toDateString()}</p>
-                                    
-                                    </div>
+                                        <div className="d-flex row-6 justify-content-center align-items-center">
+
+                                            <h3 className="modal-title fs-5" id="exampleModalLabel">{detailRdx?.chats?.name}</h3>
+                                        </div>
+                                        <div className="d-flex row-6 justify-content-center align-items-center">
+
+                                            <p>Creado el {new Date(detailRdx?.chats?.created_at).toDateString()}</p>
+
+                                        </div>
                                     </div>
 
                                     {loading && <div className="spinner-grow fs-5" role="status">
@@ -400,7 +411,7 @@ export const ChatDetail = () => {
                                                                 {userChat.name}
                                                             </div>
                                                             <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
-                                                                
+
 
 
                                                                 <CustomButton
@@ -439,7 +450,7 @@ export const ChatDetail = () => {
                                                                     {user.name}
                                                                 </div>
                                                                 <div className={detailRdx?.chats?.author_id === rdxUser?.credentials?.profileDetail?.id ? ("d-flex col-4 justify-content-center align-items-center") : ("d-none")}>
-                                                                   
+
 
                                                                     <CustomButton
 
@@ -551,6 +562,20 @@ export const ChatDetail = () => {
                         </div>
                     </div>
                 </div>
+
+                <ToastContainer
+                    position="top-right"
+                    autoClose={1300}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+
+                    theme="light"
+
+                />
             </div>
         </>
     )
