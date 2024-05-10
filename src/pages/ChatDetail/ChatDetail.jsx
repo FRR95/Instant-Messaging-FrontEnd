@@ -8,7 +8,7 @@ import { useState } from "react";
 import { bringMessagesService } from "../../services/chatApiCalls";
 import { createMessageService, deleteMessageService, updateMessageService } from "../../services/messageApiCalls";
 import { addUserToChatService, getUsersFromChatService, leaveChatService, removeUserToChatService } from "../../services/userChatApiCalls";
-import { getUsersService } from "../../services/userApiCalls";
+import { getUsersInChatService, getUsersService } from "../../services/userApiCalls";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
 import { updateUserDetail } from "../../app/slices/userDetailSlice";
 import { ToastContainer, toast } from 'react-toastify';
@@ -37,7 +37,7 @@ export const ChatDetail = () => {
         try {
 
             setLoadingSpinner(true)
-            const fetched = await getUsersService(rdxUser.credentials.token)
+            const fetched = await getUsersInChatService(rdxUser.credentials.token)
 
             if (!fetched.success) {
 

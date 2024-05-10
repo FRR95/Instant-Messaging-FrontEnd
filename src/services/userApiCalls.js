@@ -94,6 +94,29 @@ export const getUsersService = async (token,currentPage) => {
         return error;
     }
 };
+export const getUsersInChatService = async (token) => {
+    const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      };
+
+    try {
+        const response = await fetch(`${root}userchats`, options);
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        return data;
+    } catch (error) {
+        return error;
+    }
+};
 
 export const searchUsersService = async (token,nickname) => {
     const options = {
