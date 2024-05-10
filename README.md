@@ -45,52 +45,52 @@ Hi Geeks! I have made a Front End website based on <img src="https://img.shields
 
 ### Home.jsx
 
-<img src="./public/imgs/Home.PNG" alt="index" />
+<img src="./public/imgs/Home.png" alt="index" />
 
 
 
 ### Login.jsx
 
 
-<img src="./public/imgs/Login.PNG" alt="index" />
+<img src="./public/imgs/Login.png" alt="index" />
 
 
 
 ### Register.jsx
 
 
-<img src="./public/imgs/Register.PNG" alt="index" />
+<img src="./public/imgs/Register.png" alt="index" />
 
 
 
 ### Chats.jsx
 
 
-<img src="./public/imgs/Chats.PNG" alt="index" />
+<img src="./public/imgs/Chats.png" alt="index" />
 
 
 ### ChatDetail.jsx
 
 
-<img src="./public/imgs/ChatDetail.PNG" alt="index" />
+<img src="./public/imgs/ChatDetail.png" alt="index" />
 
 
 
 ### Users.jsx
 
-<img src="./public/imgs/Users.PNG" alt="index" />
+<img src="./public/imgs/Users.png" alt="index" />
 
 
 ### Profile.jsx
 
-<img src="./public/imgs/Profile.PNG" alt="index" />
+<img src="./public/imgs/Profile.png" alt="index" />
 
 
 
 ### ProfileDetail.jsx
 
 
-<img src="./public/imgs/ProfileDetail.PNG" alt="index" />
+<img src="./public/imgs/ProfileDetail.png" alt="index" />
 
 
 
