@@ -18,6 +18,16 @@ export const Users = () => {
     const dispatch = useDispatch();
     const [loading, setLoadingSpinner] = useState(false);
     const [users, setUser] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    useEffect(() => {
+        GetUsers(currentPage);
+    }, [currentPage]);
+
+    const goToPage = (page) => {
+        setCurrentPage(page);
+    };
+
 
 
     const [checkButtonUser, setCheckButtonUser] = useState(false)
@@ -73,7 +83,7 @@ export const Users = () => {
         } catch (error) {
 
             setLoadingSpinner(false)
-            return toast.error(error) 
+            return toast.error(error)
         }
     }
 
@@ -122,25 +132,30 @@ export const Users = () => {
 
                 fetched = await searchUsersService(rdxUser.credentials.token, searchUserRdx.criteriaUser);
 
-
+                setUser(fetched.data)
+               
             }
 
             else {
 
-                fetched = await getUsersService(rdxUser.credentials.token)
+                fetched = await getUsersService(rdxUser.credentials.token, currentPage)
+               
+               
+
+                setUser(fetched.data.data)
 
 
 
 
             }
 
-            setUser(fetched.data)
+            
 
 
 
 
         } catch (error) {
-            return toast.error(error) 
+            return toast.error(error)
         }
 
     }
@@ -254,10 +269,26 @@ export const Users = () => {
                                 </div>
                             </div>
                         </>)
-                    })}</>)
-                    : (<div className="spinner-grow fs-5" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>)}
+                    })}
+                       
+                        <CustomButton
+
+                            icon={"bi bi-arrow-left-circle-fill"}
+                            design={"addButtonDesign mt-5 me-5"}
+                            onClick={() => goToPage(currentPage - 1)}
+                        />
+                       
+
+                        <CustomButton
+
+                            icon={"bi bi-arrow-right-circle-fill"}
+                            design={"addButtonDesign mt-5 ms-5"}
+                            onClick={() => goToPage(currentPage + 1)}
+                        />
+                    </>)
+                    : (<><p>No se han encontrado resultados</p></>)
+
+                }
 
                 <ToastContainer
                     position="top-right"

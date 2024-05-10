@@ -71,7 +71,7 @@ export const updateUserProfileService = async (userId,profile,token) => {
         return error;
     }
 };
-export const getUsersService = async (token) => {
+export const getUsersService = async (token,currentPage) => {
     const options = {
         method: "GET",
         headers: {
@@ -81,7 +81,7 @@ export const getUsersService = async (token) => {
       };
 
     try {
-        const response = await fetch(`${root}users`, options);
+        const response = await fetch(`${root}users?page=${currentPage}`, options);
 
         const data = await response.json();
 
