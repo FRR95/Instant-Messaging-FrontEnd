@@ -543,7 +543,7 @@ export const ChatDetail = () => {
 
                     </div>
                 </div>
-                <div className="d-flex row-1 mb-2  fixed-bottom  justify-content-center align-items-center">
+                <div className="d-flex row-1 mb-5  fixed-bottom  justify-content-center align-items-center ">
                     <div className="d-flex col  justify-content-center align-items-center">
                         <div className="d-flex col-11 justify-content-start align-items-center">
                             <textarea

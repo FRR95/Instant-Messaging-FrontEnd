@@ -161,7 +161,7 @@ export const UserProfileDetail = () => {
 
 
 
-                    <label>Nombre</label>
+                    <label className="fs-5">Nombre</label>
                     <p>{rdxUserDetail.user.name}</p>
 
 
@@ -169,23 +169,23 @@ export const UserProfileDetail = () => {
 
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Nickname</label>
+                    <label className="fs-5">Nickname</label>
                     <p>{rdxUserDetail.user.nickname}</p>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Email</label>
+                    <label className="fs-5">Email</label>
                     <p>{rdxUserDetail.user.email}</p>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Biografía</label>
+                    <label className="fs-5">Biografía</label>
                     <p>{rdxUserDetail.user.biography}</p>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Estado</label>
+                    <label className="fs-5">Estado</label>
                     {rdxUserDetail.user.is_active === 0 ? (<p>DESCONECTADO 🔴</p>) : (<p>EN LINEA 🟢</p>)}
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Fecha de creación</label>
+                    <label className="fs-5">Fecha de creación</label>
                     <p>{new Date(rdxUserDetail.user.created_at).toDateString()}</p>
                 </div>
                 <ToastContainer

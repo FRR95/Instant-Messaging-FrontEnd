@@ -111,7 +111,7 @@ export const Profile = () => {
                             <div className="modal-body">
 
                                 <div className="d-flex row justify-content-center align-items-center">
-                                    <label>Nombre</label>
+                                    <label className="fs-5">Nombre</label>
                                     <CustomInput
                                         type="text"
                                         name="name"
@@ -121,7 +121,7 @@ export const Profile = () => {
                                         changeEmit={inputHandler}
                                     // onBlurFunction={(e) => checkError(e)}
                                     />
-                                    <label>Biografía</label>
+                                    <label className="fs-5">Biografía</label>
                                     <CustomInput
                                         type="text"
                                         name="biography"
@@ -175,7 +175,7 @@ export const Profile = () => {
 
 
 
-                    <label>Nombre</label>
+                    <label className="fs-5">Nombre</label>
                     <p>{user.name}</p>
 
 
@@ -183,23 +183,23 @@ export const Profile = () => {
 
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Nickname</label>
+                    <label className="fs-5">Nickname</label>
                     <p>{user.nickname}</p>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Email</label>
+                    <label className="fs-5">Email</label>
                     <p>{user.email}</p>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Biografía</label>
+                    <label className="fs-5">Biografía</label>
                     <p>{user.biography}</p>
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Estado</label>
+                    <label className="fs-5">Estado</label>
                     {user.isActive === 0 ? (<p>DESCONECTADO 🔴</p>) : (<p>EN LINEA 🟢</p>)}
                 </div>
                 <div className="d-flex row justify-content-center align-items-center">
-                    <label>Fecha de creación</label>
+                    <label className="fs-5">Fecha de creación</label>
 
                     {new Date(user.created_at).toDateString()}
                 </div>
