@@ -42,6 +42,10 @@ export const Profile = () => {
 
     const getUserProfile = async () => {
         try {
+
+            
+              
+          
             setLoadingSpinner(true)
             const fetched = await GetProfile(rdxUser.credentials.token);
 
@@ -69,6 +73,11 @@ export const Profile = () => {
 
     const updateProfile = async () => {
         try {
+
+            if (user.name === "" || user.biography === "") {
+
+                return toast.error("No has rellenado todos los campos")
+            }
 
             setLoadingSpinner(true)
             const fetched = await updateProfileService(user, rdxUser.credentials.token)

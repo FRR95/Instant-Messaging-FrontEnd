@@ -154,6 +154,11 @@ export const ChatDetail = () => {
 
         try {
 
+            if (messageCredential.content === "") {
+
+                return toast.error("Por favor,no deje el mensaje vacio")
+            }
+
 
             const fetched = await createMessageService(chatId, messageCredential, rdxUser.credentials.token)
 
@@ -201,6 +206,11 @@ export const ChatDetail = () => {
         }
     }
     const updateMessage = async (messageId) => {
+
+        if (messageCredential.content === "") {
+
+            return toast.error("Por favor,no deje el mensaje vacio")
+        }
 
         setLoadingSpinner(true)
         const fetched = await updateMessageService(messageId, messageCredential, detailRdx?.chats?.id, rdxUser.credentials.token)

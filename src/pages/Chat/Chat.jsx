@@ -100,6 +100,11 @@ export const Chat = () => {
     const createChat = async () => {
         try {
 
+            if (chatCredential.name === "") {
+
+                return toast.error("Por favor,no deje el nombre del chat vacio")
+            }
+
             setLoadingSpinner(true)
 
             const fetched = await createChatService(chatCredential, rdxUser?.credentials?.token)
@@ -146,6 +151,11 @@ export const Chat = () => {
     }
 
     const updateChat = async (chatId) => {
+
+        if (chatCredential.name === "") {
+
+            return toast.error("Por favor,no deje el nombre del chat vacio")
+        }
 
         setLoadingSpinner(true)
 
